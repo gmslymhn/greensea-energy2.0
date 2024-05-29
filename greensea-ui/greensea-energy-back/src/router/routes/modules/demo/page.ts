@@ -3,7 +3,7 @@ import type { AppRouteModule } from '@/router/types';
 import { getParentLayout, LAYOUT } from '@/router/constant';
 import { ExceptionEnum } from '@/enums/exceptionEnum';
 import { t } from '@/hooks/web/useI18n';
-import {RoleEnum} from "@/enums/roleEnum";
+import { RoleEnum } from '@/enums/roleEnum';
 
 const ExceptionPage = () => import('@/views/sys/exception/Exception.vue');
 
@@ -16,7 +16,7 @@ const page: AppRouteModule = {
     orderNo: 20,
     icon: 'ion:aperture-outline',
     title: t('日志管理'),
-    roles: [RoleEnum.SUPER],
+    roles: [RoleEnum.SUPER, RoleEnum.ADMIN],
   },
   children: [
     // =============================form start=============================
