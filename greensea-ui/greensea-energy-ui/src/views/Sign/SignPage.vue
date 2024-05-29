@@ -47,6 +47,7 @@
             </el-form-item>
           <el-form-item class="emailInput">
             <el-form-item
+                style="width: 100%"
                 label="Email"
                 :rules="[
                   {
@@ -65,7 +66,6 @@
                   v-model="email"
                   placeholder="请输入您的邮箱"
                   size="large"
-                  style="width: 100%"
               >
                 <template #prefix>
                   <el-icon><Message /></el-icon>

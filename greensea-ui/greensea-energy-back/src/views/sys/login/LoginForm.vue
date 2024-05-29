@@ -55,7 +55,7 @@
     <ARow class="enter-x" :gutter="[16, 16]">
       <ACol :md="8" :xs="24">
         <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
-          {{ t('sys.login.mobileSignInFormTitle') }}
+          {{ t('管理员登录') }}
         </Button>
       </ACol>
       <ACol :md="8" :xs="24">
@@ -83,7 +83,6 @@
 </template>
 <script lang="ts" setup>
   import { reactive, ref, unref, computed } from 'vue';
-
   import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
   import {
     GithubFilled,
@@ -128,7 +127,6 @@
   //onKeyStroke('Enter', handleLogin);
 
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
-
   async function handleLogin() {
     const data = await validForm();
     if (!data) return;
@@ -137,19 +135,20 @@
       const userInfo = await userStore.login({
         userPassword: data.password,
         userAccount: data.account,
-        mode: 'none', //不要默认的错误提示
+        // mode: 'none', //不要默认的错误提示
       });
       console.log('这个真的能打印出来东西嘛');
       console.log('userInfo', userInfo);
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
-          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.data.account}`,
           duration: 3,
         });
       }
     } catch (error) {
       console.log('到底哪里');
+      console.log(error);
       createErrorModal({
         title: t('sys.api.errorTip'),
         content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),

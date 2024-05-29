@@ -7,6 +7,7 @@ import HomeView from '../views/home/MyHome.vue'
 import LoginView from '../views/Login/PageLogin.vue'
 import SignPage from "@/views/Sign/SignPage.vue";
 import NewProduct from '../views/home/components/NewProductPage.vue'
+import allProduct from '@/views/home/components/AllProductPage.vue'
 
 //算了，直接自己配置吧
 const routes = [
@@ -29,6 +30,11 @@ const routes = [
     {
         path: '/newProduct',
         component: NewProduct,
+        meta:{header: false}
+    },
+    {
+        path: '/allProduct',
+        component: allProduct,
         meta:{header: false}
     }
 ];

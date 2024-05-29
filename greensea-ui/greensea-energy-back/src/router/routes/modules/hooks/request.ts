@@ -1,6 +1,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import {RoleEnum} from "@/enums/roleEnum";
 
 const charts: AppRouteModule = {
   path: '/useRequest',
@@ -10,7 +11,8 @@ const charts: AppRouteModule = {
   meta: {
     orderNo: 900,
     icon: 'ant-design:api-outlined',
-    title: 'useRequest',
+    title: '个人信息修改',
+    roles: [RoleEnum.SUPER],
   },
   children: [
     {

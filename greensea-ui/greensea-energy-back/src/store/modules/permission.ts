@@ -117,7 +117,7 @@ export const usePermissionStore = defineStore({
       let routes: AppRouteRecordRaw[] = [];
       const roleList = toRaw(userStore.getRoleList) || [];
       const { permissionMode = projectSetting.permissionMode } = appStore.getProjectConfig;
-
+      console.log('###', userStore.getRoleList);
       // 路由过滤器 在 函数filter 作为回调传入遍历使用
       const routeFilter = (route: AppRouteRecordRaw) => {
         const { meta } = route;

@@ -1,6 +1,9 @@
 // token key
 export const TOKEN_KEY = 'TOKEN__';
 
+//存储是否勾选
+export const SET_ADMIN_LOGIN = 'ADMIN__LOGIN__';
+
 export const LOCALE_KEY = 'LOCALE__';
 
 // user info key

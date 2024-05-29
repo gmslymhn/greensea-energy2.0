@@ -60,6 +60,12 @@ const toggleMenu = () => {
 const handleCommand = (command) =>{
   console.log("发生了点击事件")
   console.log(`#${command}`)
+  switch (command){
+    case 'allProduct':
+      router.push({
+        path:`/${command}`
+      })
+  }
   setTimeout(()=>{
     router.push({
       hash:`#${command}`

@@ -1,63 +1,166 @@
 <template>
   <div v-if="getShow">
     <LoginFormTitle class="enter-x" />
-    <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
-      <FormItem name="mobile" class="enter-x">
+    <Form
+      class="p-4 enter-x"
+      :model="formData"
+      :rules="getFormRules"
+      ref="formRef"
+      v-show="getShow"
+      @keypress.enter="handleLogin"
+    >
+      <FormItem name="account" class="enter-x">
         <Input
           size="large"
-          v-model:value="formData.mobile"
-          :placeholder="t('sys.login.mobile')"
+          v-model:value="formData.account"
+          :placeholder="t('sys.login.username')"
           class="fix-auto-fill"
         />
       </FormItem>
-      <FormItem name="sms" class="enter-x">
-        <CountdownInput
+      <FormItem name="password" class="enter-x">
+        <InputPassword
           size="large"
-          class="fix-auto-fill"
-          v-model:value="formData.sms"
-          :placeholder="t('sys.login.smsCode')"
+          visibilityToggle
+          v-model:value="formData.password"
+          :placeholder="t('sys.login.password')"
         />
       </FormItem>
+
+      <ARow class="enter-x">
+        <ACol :span="12">
+          <FormItem>
+            <!-- No logic, you need to deal with it yourself -->
+            <Checkbox v-model:checked="rememberMe" size="small">
+              {{ t('sys.login.rememberMe') }}
+            </Checkbox>
+          </FormItem>
+        </ACol>
+        <ACol :span="12">
+          <FormItem :style="{ 'text-align': 'right' }">
+            <!-- No logic, you need to deal with it yourself -->
+            <Button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
+              {{ t('sys.login.forgetPassword') }}
+            </Button>
+          </FormItem>
+        </ACol>
+      </ARow>
 
       <FormItem class="enter-x">
         <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
           {{ t('sys.login.loginButton') }}
         </Button>
-        <Button size="large" block class="mt-4" @click="handleBackLogin">
-          {{ t('sys.login.backSignIn') }}
-        </Button>
+        <!-- <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
+        {{ t('sys.login.registerButton') }}
+      </Button> -->
       </FormItem>
+      <ARow class="enter-x" :gutter="[16, 16]">
+        <ACol :md="8" :xs="24">
+          <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
+            {{ t('管理员登录') }}
+          </Button>
+        </ACol>
+        <ACol :md="8" :xs="24">
+          <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
+            {{ t('sys.login.qrSignInFormTitle') }}
+          </Button>
+        </ACol>
+        <ACol :md="8" :xs="24">
+          <Button block @click="setLoginState(LoginStateEnum.REGISTER)">
+            {{ t('sys.login.registerButton') }}
+          </Button>
+        </ACol>
+      </ARow>
+
+      <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
+
+      <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
+        <GithubFilled />
+        <WechatFilled />
+        <AlipayCircleFilled />
+        <GoogleCircleFilled />
+        <TwitterCircleFilled />
+      </div>
     </Form>
   </div>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, computed, unref } from 'vue';
-  import { Form, Input, Button } from 'ant-design-vue';
-  import { CountdownInput } from '@/components/CountDown';
+  import { reactive, ref, unref, computed } from 'vue';
+  import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
+  import {
+    GithubFilled,
+    WechatFilled,
+    AlipayCircleFilled,
+    GoogleCircleFilled,
+    TwitterCircleFilled,
+  } from '@ant-design/icons-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
-  import { useI18n } from '@/hooks/web/useI18n';
-  import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from './useLogin';
 
+  import { useI18n } from '@/hooks/web/useI18n';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  // import { useUserStore } from '@/store/modules/user';
+  import { useSuperUserStore } from '@/store/modules/superUser';
+  import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
+  import { useDesign } from '@/hooks/web/useDesign';
+  //import { onKeyStroke } from '@vueuse/core';
+
+  const ACol = Col;
+  const ARow = Row;
   const FormItem = Form.Item;
+  const InputPassword = Input.Password;
   const { t } = useI18n();
-  const { handleBackLogin, getLoginState } = useLoginState();
+  const { notification, createErrorModal } = useMessage();
+  const { prefixCls } = useDesign('login');
+  const userStore = useSuperUserStore();
+
+  const { setLoginState, getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
 
   const formRef = ref();
   const loading = ref(false);
+  const rememberMe = ref(false);
 
   const formData = reactive({
-    mobile: '',
-    sms: '',
+    account: '',
+    password: '',
   });
 
   const { validForm } = useFormValid(formRef);
 
-  const getShow = computed(() => unref(getLoginState) === LoginStateEnum.MOBILE);
+  //onKeyStroke('Enter', handleLogin);
 
+  const getShow = computed(() => unref(getLoginState) === LoginStateEnum.MOBILE);
   async function handleLogin() {
     const data = await validForm();
     if (!data) return;
-    console.log(data);
+    try {
+      loading.value = true;
+      console.log('###', userStore);
+      const userInfo = await userStore.Superlogin({
+        gmPassword: data.password,
+        gmAccount: data.account,
+        // mode: 'none', //不要默认的错误提示
+      });
+      console.log('这个真的能打印出来东西嘛');
+      console.log('userInfo', userInfo);
+      if (userInfo) {
+        notification.success({
+          message: t('sys.login.loginSuccessTitle'),
+          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.data.account}`,
+          duration: 3,
+        });
+      }
+    } catch (error) {
+      console.log('到底哪里');
+      console.log(error);
+      createErrorModal({
+        title: t('sys.api.errorTip'),
+        content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
+        getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
+      });
+    } finally {
+      loading.value = false;
+    }
   }
+
 </script>

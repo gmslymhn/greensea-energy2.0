@@ -1,14 +1,25 @@
 import { defHttp } from '@/utils/http/axios';
-import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
+import {
+  LoginParams,
+  LoginResultModel,
+  GetUserInfoModel,
+  SignParams,
+  smsCodeParams,
+  SuperLoginParams,
+} from './model/userModel';
 
 import { ErrorMessageMode } from '#/axios';
 
 enum Api {
   Login = '/background/user/login',
   Logout = '/logout',
-  GetUserInfo = '/getUserInfo',
+  SuperLogin = '/background/gm/login',
+  GetUserInfo = '/background/user/getselfmag',
+  GetSuperUserInfo = '/background/gm/getselfmag',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
+  Sign = '/background/user/register',
+  GetSmsCode = '/background/user/register/verify',
 }
 
 /**
@@ -25,12 +36,34 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
     },
   );
 }
+export function adminLoginApi(params: SuperLoginParams, mode: ErrorMessageMode = 'modal') {
+  return defHttp.post<LoginResultModel>(
+    {
+      url: Api.SuperLogin,
+      params,
+    },
+    {
+      errorMessageMode: mode,
+    },
+  );
+}
 
 /**
  * @description: getUserInfo
  */
 export function getUserInfo() {
-  return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+  return defHttp.post<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+}
+
+/**
+ * @description: 获取超管的用户信息
+ */
+
+export function getSuperUserInfo() {
+  return defHttp.post<GetUserInfoModel>(
+    { url: Api.GetSuperUserInfo },
+    { errorMessageMode: 'none' },
+  );
 }
 
 export function getPermCode() {
@@ -51,5 +84,29 @@ export function testRetry() {
         waitTime: 1000,
       },
     },
+  );
+}
+
+//注册按钮
+export function SignApi(params: SignParams, mode: ErrorMessageMode = 'modal') {
+  return defHttp.post(
+    {
+      url: Api.Sign,
+      params,
+    },
+    {
+      errorMessageMode: mode,
+    },
+  );
+}
+
+// 获取验证码
+export function getSmsCode(params: smsCodeParams, mode: ErrorMessageMode = 'modal') {
+  return defHttp.post(
+    {
+      url: Api.GetSmsCode,
+      params,
+    },
+    { errorMessageMode: mode },
   );
 }

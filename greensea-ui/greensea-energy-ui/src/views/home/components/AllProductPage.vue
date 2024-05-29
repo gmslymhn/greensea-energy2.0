@@ -2,7 +2,7 @@
   <div class="ProductAll" :id="id">
     <div class="allProductContent">
       <div>
-        <span class="allProductTitle">New Product</span>
+        <span class="allProductTitle">All Product</span>
       </div>
       <div class="allProduct">
         <div>

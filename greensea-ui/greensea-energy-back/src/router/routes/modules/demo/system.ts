@@ -2,6 +2,7 @@ import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
 import { t } from '@/hooks/web/useI18n';
+import {RoleEnum} from "@/enums/roleEnum";
 
 const system: AppRouteModule = {
   path: '/system',
@@ -12,6 +13,7 @@ const system: AppRouteModule = {
     orderNo: 2000,
     icon: 'ion:settings-outline',
     title: t('routes.demo.system.moduleName'),
+    roles: [RoleEnum.SUPER],
   },
   children: [
     {

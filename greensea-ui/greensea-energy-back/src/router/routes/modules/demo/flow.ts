@@ -2,6 +2,7 @@ import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
 import { t } from '@/hooks/web/useI18n';
+import {RoleEnum} from "@/enums/roleEnum";
 
 const flow: AppRouteModule = {
   path: '/flow',
@@ -11,7 +12,7 @@ const flow: AppRouteModule = {
   meta: {
     orderNo: 5000,
     icon: 'tabler:chart-dots',
-    title: t('routes.demo.flow.name'),
+    title: t('安全设置'),
   },
   children: [
     {
@@ -19,7 +20,7 @@ const flow: AppRouteModule = {
       name: 'flowChartDemo',
       component: () => import('@/views/demo/comp/flow-chart/index.vue'),
       meta: {
-        title: t('routes.demo.flow.flowChart'),
+        title: t('账号登录安全'),
       },
     },
   ],

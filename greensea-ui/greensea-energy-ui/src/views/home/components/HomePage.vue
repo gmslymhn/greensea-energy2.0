@@ -18,7 +18,7 @@ const props = defineProps({
 .homePage{
   width: 100vw;
   height: 100vh;
-  background: pink;
+  background: #2e394b;
 }
 
 </style>

@@ -17,7 +17,7 @@
       [LoginStateEnum.RESET_PASSWORD]: t('sys.login.forgetFormTitle'),
       [LoginStateEnum.LOGIN]: t('sys.login.signInFormTitle'),
       [LoginStateEnum.REGISTER]: t('sys.login.signUpFormTitle'),
-      [LoginStateEnum.MOBILE]: t('sys.login.mobileSignInFormTitle'),
+      [LoginStateEnum.MOBILE]: t('管理员登录'),
       [LoginStateEnum.QR_CODE]: t('sys.login.qrSignInFormTitle'),
     };
     return titleObj[unref(getLoginState)];

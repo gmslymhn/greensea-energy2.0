@@ -39,6 +39,11 @@ export const useUserStore = defineStore({
     // Last fetch time
     lastUpdateTime: 0,
   }),
+  // mutations: {
+  //   SET_ADMIN_LOGIN(state, value: boolean) {
+  //     state.adminLogin = value;
+  //   },
+  //},
   getters: {
     getUserInfo(state): UserInfo {
       return state.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
@@ -88,22 +93,36 @@ export const useUserStore = defineStore({
         mode?: ErrorMessageMode;
       },
     ): Promise<GetUserInfoModel | null> {
+      console.log('到这里了嘛');
       try {
         const { goHome = true, mode, ...loginParams } = params;
-        const data = await loginApi(loginParams, mode);
-        const { token } = data;
+        const response = await loginApi(loginParams, mode);
+        // const response = await loginApi(loginParams, mode);
+        console.log('loginApi 调用成功', response);
 
-        // save token
+        // 检查响应是否包含预期的数据
+        // if (!response || !response.token) {
+        //   throw new Error('loginApi 返回的响应无效');
+        // }
+        console.log('为什么拿不到', response.data.token);
+
+        const token = response.data.token;
+        console.log(this.getToken);
+
+        //存储token
         this.setToken(token);
+        console.log('这里能正常运行嘛, token:', token);
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
       }
     },
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
+      console.log('hahh');
       if (!this.getToken) return null;
       // get user info
       const userInfo = await this.getUserInfoAction();
+      console.log('走到这里');
 
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
@@ -111,7 +130,7 @@ export const useUserStore = defineStore({
       } else {
         const permissionStore = usePermissionStore();
 
-        // 动态路由加载（首次）
+        // 动态路由加载（首次）然后现在登录搞定了，现在需要搞定的是动态菜单
         if (!permissionStore.isDynamicAddedRoute) {
           const routes = await permissionStore.buildRoutesAction();
           [...routes, PAGE_NOT_FOUND_ROUTE].forEach((route) => {
@@ -126,12 +145,15 @@ export const useUserStore = defineStore({
       return userInfo;
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
+      console.log('哈哈哈');
       if (!this.getToken) return null;
       const userInfo = await getUserInfo();
-      const { roles = [] } = userInfo;
-      if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
-        this.setRoleList(roleList);
+      // const { role = [] } = userInfo;
+      const role = [userInfo.data.role];
+      this.setRoleList(role);
+      if (isArray(role)) {
+        // const roleList = role.map((item) => item.value) as RoleEnum[];
+        // this.setRoleList(roleList);
       } else {
         userInfo.roles = [];
         this.setRoleList([]);

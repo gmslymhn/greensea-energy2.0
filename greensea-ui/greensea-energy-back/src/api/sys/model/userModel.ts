@@ -6,6 +6,24 @@ export interface LoginParams {
   userPassword: string;
 }
 
+export interface SuperLoginParams {
+  gmAccount: string;
+  gmPassword: string;
+}
+
+export interface smsCodeParams {
+  userAccount: string;
+  userEmail: string;
+}
+
+export interface SignParams {
+  userAccount: string;
+  userPassword: string;
+  userNickname: string;
+  userEmail: string;
+  verificationCode: string;
+}
+
 export interface RoleInfo {
   roleName: string;
   value: string;
@@ -14,10 +32,17 @@ export interface RoleInfo {
 /**
  * @description: Login interface return value
  */
+// export interface LoginResultModel {
+//   lastLoginIp: string;
+//   lastLoginLocation: string;
+//   lastLoginTime: string;
+//   token: string;
+// }
+
 export interface LoginResultModel {
-  userId: string | number;
-  token: string;
-  roles: RoleInfo[];
+  code: number;
+  message: string;
+  data: any;
 }
 
 /**

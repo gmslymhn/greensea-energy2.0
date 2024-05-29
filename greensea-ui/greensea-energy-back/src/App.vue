@@ -1,44 +1,40 @@
 <template>
-  <!--路由的出口-->
-  <HeaderPage v-show="$route.meta.header"></HeaderPage>
-  <router-view></router-view>
+  <ConfigProvider :locale="getAntdLocale" :theme="themeConfig">
+    <AppProvider>
+      <RouterView />
+    </AppProvider>
+  </ConfigProvider>
 </template>
 
-<script>
-import {defineComponent} from "vue";
-import HeaderPage from "@/components/HeaderPage.vue";
+<script lang="ts" setup>
+  import { AppProvider } from '@/components/Application';
+  import { useTitle } from '@/hooks/web/useTitle';
+  import { useLocale } from '@/locales/useLocale';
+  import { ConfigProvider } from 'ant-design-vue';
 
-export default defineComponent({
-  components: {HeaderPage}
-})
+  import { useDarkModeTheme } from '@/hooks/setting/useDarkModeTheme';
+  import 'dayjs/locale/zh-cn';
+  import { computed } from 'vue';
+
+  // support Multi-language
+  const { getAntdLocale } = useLocale();
+
+  const { isDark, darkTheme } = useDarkModeTheme();
+
+  const themeConfig = computed(() =>
+    Object.assign(
+      {
+        token: {
+          colorPrimary: '#0960bd',
+          colorSuccess: '#55D187',
+          colorWarning: '#EFBD47',
+          colorError: '#ED6F6F',
+          colorInfo: '#0960bd',
+        },
+      },
+      isDark.value ? darkTheme : {},
+    ),
+  );
+  // Listening to page changes and dynamically changing site titles
+  useTitle();
 </script>
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  /* 內减模式 */
-  box-sizing: border-box;
-}
-
-li {
-  list-style: none;
-}
-a {
-  text-decoration: none;
-}
-
-.clearfix:before,
-.clearfix:after {
-  content:"";
-  display:table;
-}
-.clearfix:after {
-  clear:both;
-}
-
-.wrapper {
-  width: 1200px;
-  margin: 0 auto;
-}
-</style>
