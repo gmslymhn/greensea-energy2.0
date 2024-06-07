@@ -1,4 +1,5 @@
 <template>
+  <!-- 修改 -->
   <div ref="chartRef" :style="{ height, width }"></div>
 </template>
 <script lang="ts" setup>
