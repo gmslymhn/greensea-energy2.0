@@ -18,11 +18,11 @@ spring:
     #数据库驱动完整类名
     driver-class-name: com.mysql.cj.jdbc.Driver
     #数据库连接url
-    url: jdbc:mysql://47.113.192.133:3306/greensea_energy
+    url: jdbc:mysql://111.229.223.38:3306/greensea_device
     #数据库用户名
     username: root
     #数据库密码
-    password: gxny1688
+    password: QAZlyf207
     # druid 连接池管理
     druid:
       filter:
@@ -96,19 +96,13 @@ spring:
     multipart:
       enabled: true
       # 文件单个限制
-      max-file-size: 10MB
+      max-file-size: 1MB
       # 请求最大限制
       max-request-size: 20MB
-  mail:
-    # 你的邮箱，发邮件的邮箱
-    username: gmslymhn@163.com
-    # 你的授权码，邮箱里面设置->POP3/SMTP/IMAP
-    password: ZHOMYZQXXQVJVNJK
-    host: smtp.163.com
 
 
 server:
-  port: 8081
+  port: 8082
 # springdoc-openapi项目配置，访问地址：http://127.0.0.1:8081/doc.html
 springdoc:
   swagger-ui:
@@ -120,7 +114,7 @@ springdoc:
   group-configs:
     - group: '框架'
       paths-to-match: '/**'
-      packages-to-scan: greensea.energy.framework.controller
+      packages-to-scan: greensea.energy.upload.controller
 # Xxl-Job分布式定时任务调度中心
 xxl:
   job:
