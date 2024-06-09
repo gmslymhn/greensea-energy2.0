@@ -83,6 +83,12 @@
                 <artifactId>UserAgentUtils</artifactId>
                 <version>1.21</version>
             </dependency>
+            <!--            Dynamic DataSource（动态数据源）-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+                <version>4.2.0</version>
+            </dependency>
 
             <!-- 通用工具-->
             <dependency>
@@ -104,7 +110,7 @@
             </dependency>
             <!--        业务模块-->
             <dependency>
-                <groupId>greensea-energy</groupId>
+                <groupId>greensea.energy</groupId>
                 <artifactId>greensea-device</artifactId>
                 <version>${greensea.version}</version>
             </dependency>

@@ -24,6 +24,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!--            Dynamic DataSource（动态数据源）-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+            <version>4.2.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

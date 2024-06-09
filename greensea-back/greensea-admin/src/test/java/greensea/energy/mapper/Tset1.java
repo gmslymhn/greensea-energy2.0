@@ -3,6 +3,9 @@ package greensea.energy.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import greensea.energy.device.doman.entity.DeviceUploadEntity;
+import greensea.energy.device.header.DeviceTableNameHandler;
+import greensea.energy.device.mapper.DeviceUploadMapper;
 import greensea.energy.framework.domain.entity.GmEntity;
 import greensea.energy.framework.jwt.JwtUtil;
 import greensea.energy.framework.mapper.GmMapper;
@@ -14,6 +17,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,6 +42,8 @@ public class Tset1 {
     private JwtUtil jwtUtil;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private DeviceUploadMapper deviceMapper;
     @Test
     public void testInsert() {
         GmEntity gmEntity = new GmEntity();
@@ -61,6 +68,10 @@ public class Tset1 {
     }
     @Test
     public void test1(){
-        System.out.println(roleMapper.selectById(1));
+        DeviceTableNameHandler.setData("1");
+        List<DeviceUploadEntity> list = deviceMapper.selectList(null);
+        // 用完即销毁
+        DeviceTableNameHandler.removeData();
+        System.out.println(list);
     }
 }

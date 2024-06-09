@@ -36,11 +36,11 @@ public class ResourceServiceimpl implements IResourceService {
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         String imagePath = null;
         if(type == 3 && suffixName.equals(".md")){
-            imagePath ="Markdown\\";
+            imagePath ="Markdown/";
         }else if(type==1 && (suffixName.equals(".jpg") || suffixName.equals(".png"))){
-            imagePath ="Image\\";
+            imagePath ="Image/";
         }else if(type==2 && suffixName.equals(".mp4")){
-            imagePath ="Video\\";
+            imagePath ="Video/";
         }else {
             return R.error("文件格式错误！");
         }
@@ -51,7 +51,7 @@ public class ResourceServiceimpl implements IResourceService {
 
         try {
             BufferedOutputStream out = new BufferedOutputStream(
-                    new FileOutputStream(new File("selab-resources\\"+imagePath + fileName2)));
+                    new FileOutputStream(new File("greensea-resources/"+imagePath + fileName2)));
             out.write(file.getBytes());
             out.flush();
             out.close();

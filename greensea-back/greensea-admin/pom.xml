@@ -25,6 +25,12 @@
             <artifactId>greensea-framework</artifactId>
         </dependency>
 
+        <!--设备篇-->
+        <dependency>
+            <groupId>greensea.energy</groupId>
+            <artifactId>greensea-device</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -47,8 +53,12 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
-
+        <!--            Dynamic DataSource（动态数据源）-->
+<!--        <dependency>-->
+<!--            <groupId>com.baomidou</groupId>-->
+<!--            <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>-->
+<!--            <version>3.6.0</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 
