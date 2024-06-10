@@ -51,6 +51,7 @@ public class GmController {
     }
     @PostMapping("/logout")
     @Operation(summary = "管理员登出")
+    @PreAuthorize("@ss.hasLoginType('A')")
     public R logout() {
         R r = iGmService.logoutGm();
         return r;

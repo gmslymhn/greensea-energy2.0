@@ -1,6 +1,7 @@
 package greensea.energy;
 
 import greensea.energy.common.utils.RedisUtils;
+import greensea.energy.device.mapper.DeviceUploadMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +16,19 @@ public class GreenseaEnergyApplicationTests {
 
     @Autowired
     private RedisUtils redisUtils;
+    @Autowired
+    private DeviceUploadMapper deviceUploadMapper;
 
     @Test
     public void test() {
+        deviceUploadMapper.createNewTable("3216");
 //        ResourceEntity resourceEntity = new ResourceEntity();
 //        resourceEntity.setResourceDescription("3213123");
 //        resourceEntity.setResourceName("321");
 //        redisUtils.setCacheObject("resourceKey",resourceEntity);
 //        redisUtils.setCacheObject("yourKey", 321, 15, TimeUnit.MINUTES);
 //        redisUtils.setCacheObject("yourKey", 3211, 15, TimeUnit.MINUTES);
-        System.out.println(redisUtils.getExpirationTime("login_user:10"));
+//        System.out.println(redisUtils.getExpirationTime("login_user:10"));
 //        redisUtils.deleteObject("321");
 //        System.out.println(redisUtils.getCacheObject("yourKey"));
 //        LoginUserToken loginUserToken = (LoginUserToken) redisUtils.getCacheObject("login_tokens:FEHZwC5k3a");

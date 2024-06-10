@@ -18,11 +18,11 @@ spring:
     #数据库驱动完整类名
     driver-class-name: com.mysql.cj.jdbc.Driver
     #数据库连接url
-    url: jdbc:mysql://111.229.223.38:3306/greensea_device
+    url: jdbc:mysql://47.113.192.133:3306/greensea_device
     #数据库用户名
     username: root
     #数据库密码
-    password: QAZlyf207
+    password:  greensea123456
     # druid 连接池管理
     druid:
       filter:

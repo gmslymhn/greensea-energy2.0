@@ -2,6 +2,7 @@ package greensea.energy.common.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,25 +26,30 @@ public class BaseEntity implements Serializable {
      * 创建用户
      */
     @TableField("create_gm")
+    @JsonIgnore
     private String createUser;
     /**
      * 创建时间
      */
+    @JsonIgnore
     @TableField("create_time")
     private String createTime;
     /**
      * 修改用户
      */
+    @JsonIgnore
     @TableField("update_gm")
     private String updateUser;
     /**
      * 修改时间
      */
+    @JsonIgnore
     @TableField("update_time")
     private String updateTime;
     /**
-     * 逻辑删除(1删除 0未删除)
+     * 逻辑删除(6删除 0未删除)
      */
+    @JsonIgnore
     @TableLogic
     @TableField("del_flag")
     private Integer delFlag;

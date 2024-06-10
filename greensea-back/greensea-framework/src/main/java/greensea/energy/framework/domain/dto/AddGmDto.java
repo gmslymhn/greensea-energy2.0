@@ -1,6 +1,5 @@
 package greensea.energy.framework.domain.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import greensea.energy.common.constant.UserConstants;
 import greensea.energy.common.validator.Xss;
 import io.swagger.v3.oas.annotations.media.Schema;

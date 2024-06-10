@@ -8,6 +8,7 @@ import greensea.energy.common.exception.BaseException;
 import greensea.energy.common.utils.ObjectUtils;
 import greensea.energy.common.utils.http.ServletUtils;
 import greensea.energy.framework.domain.model.LoginUser;
+import greensea.energy.framework.domain.model.LoginUserToken;
 import greensea.energy.framework.jwt.JwtUtil;
 import greensea.energy.framework.web.service.TokenService;
 import io.jsonwebtoken.Claims;
@@ -82,10 +83,16 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 //
 //        }
         LoginUser loginUser = tokenService.getLoginUser(request);
-
         log.info(String.valueOf(loginUser));
         if (ObjectUtils.isNull(loginUser)){
             String msg = "请重新登陆!";
+            ServletUtils.renderString(response, JSONUtil.toJsonStr(R.error(ResponseCode.Unauthorized,msg)));
+            return;
+        }
+        LoginUserToken loginUserToken = tokenService.getLoginUserToken(request);
+        if (!loginUser.getToken().equals(loginUserToken.getToken())){
+            String msg = "账号已在别处登录，请重新登陆!";
+            tokenService.delLoginUserToken(loginUserToken.getToken());
             ServletUtils.renderString(response, JSONUtil.toJsonStr(R.error(ResponseCode.Unauthorized,msg)));
             return;
         }

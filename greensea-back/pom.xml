@@ -23,6 +23,7 @@
     </modules>
     <packaging>pom</packaging>
 
+
     <properties>
         <greensea.version>0.0.1</greensea.version>
         <java.version>17</java.version>

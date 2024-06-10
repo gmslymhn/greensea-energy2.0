@@ -51,7 +51,8 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    @Operation(summary = "管理员登出")
+    @Operation(summary = "用户登出")
+    @PreAuthorize("@ss.hasLoginType('B')")
     public R logout() {
         R r = iUserService.logoutUser();
         return r;

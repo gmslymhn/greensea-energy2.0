@@ -100,17 +100,17 @@ spring:
           #数据库驱动完整类名
           driver-class-name: com.mysql.cj.jdbc.Driver
           #数据库连接url
-          url: jdbc:mysql://111.229.223.38:3306/greensea_energy
+          url: jdbc:mysql://47.113.192.133:3306/greensea_energy
           #数据库用户名
           username: root
           # druid 连接池管理
-          password: QAZlyf207
+          password: greensea123456
         slave:
           type: com.alibaba.druid.pool.DruidDataSource
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://111.229.223.38:3306/greensea_device
+          url: jdbc:mysql://47.113.192.133:3306/greensea_device
           username: root
-          password: QAZlyf207
+          password: greensea123456
   # 文件配置
   servlet:
     multipart:
@@ -141,6 +141,9 @@ springdoc:
     - group: '框架'
       paths-to-match: '/**'
       packages-to-scan: greensea.energy.framework.controller
+    - group: '设备管理'
+      paths-to-match: '/**'
+      packages-to-scan: greensea.energy.device.controller
 # Xxl-Job分布式定时任务调度中心
 xxl:
   job:
