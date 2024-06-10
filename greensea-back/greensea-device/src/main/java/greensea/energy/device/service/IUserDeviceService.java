@@ -1,5 +1,8 @@
 package greensea.energy.device.service;
 
+import greensea.energy.common.domain.R;
+import greensea.energy.device.doman.param.DeviceParam;
+
 /**
  * @ClassName: IUserDeviceService
  * @Description:
@@ -8,4 +11,9 @@ package greensea.energy.device.service;
  * @Version: 1.0
  **/
 public interface IUserDeviceService {
+    R getDeviceList2(Integer userId, DeviceParam deviceParam);
+
+    R getDeviceMsgById2(Integer userId, Integer deviceId);
+
+    R bindDevice(Integer userId, String deviceNumber);
 }

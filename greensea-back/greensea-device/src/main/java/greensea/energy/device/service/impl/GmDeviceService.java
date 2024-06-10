@@ -73,6 +73,7 @@ public class GmDeviceService implements IGmDeviceService {
         deviceEntity1.setDeviceName(addDeviceDto.getDeviceName());
         deviceEntity1.setDeviceType(addDeviceDto.getDeviceType());
         deviceEntity1.setCreateUser(SecurityUtils.getUserAccount());
+        deviceEntity1.setDeviceState(0);
         deviceEntity1.setDelFlag(0);
         deviceMapper.insert(deviceEntity1);
         DeviceEntity deviceEntity2 = deviceMapper.selectOne(queryWrapper);
