@@ -33,7 +33,6 @@ public class LogController {
     @PostMapping("/loginlog")
     @PreAuthorize("@ss.hasPermission('admin')")
     @Operation(summary = "登陆日志",description= "获取登录日志")
-    @Parameter(name="loginType",description="登陆类型（A为管理员登陆，B为用户登录）",required=true)
     public R login(@RequestBody @Validated LoginLogParam loginLogParam) {
         return iLogService.getLoginLog(loginLogParam);
     }
