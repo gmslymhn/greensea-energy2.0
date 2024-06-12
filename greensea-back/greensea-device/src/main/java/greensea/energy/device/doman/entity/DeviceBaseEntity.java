@@ -133,7 +133,7 @@ public class DeviceBaseEntity implements Serializable {
     /**
      * 小锂电池电流/A
      */
-    @Schema(description = "")
+    @Schema(description = "小锂电池电流/A")
     @TableField("sbms_cur")
     private Float sbmsCur;
     /**

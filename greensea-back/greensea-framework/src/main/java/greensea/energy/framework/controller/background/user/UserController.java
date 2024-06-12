@@ -1,6 +1,7 @@
 package greensea.energy.framework.controller.background.user;
 
 import eu.bitwalker.useragentutils.UserAgent;
+import greensea.energy.common.annotation.LoginLogAnnotation;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.http.AddressUtil;
 import greensea.energy.common.utils.http.IpUtil;
@@ -41,6 +42,7 @@ public class UserController {
 
     @PostMapping("/login")
     @Operation(summary = "用户登陆")
+    @LoginLogAnnotation(loginType = "B")
     public R login(@RequestBody @Validated UserLoginDto userLoginDto) {
         R verifyr = loginService.mayLogin(userLoginDto.getUserAccount());
         if (verifyr.getCode()!=200){

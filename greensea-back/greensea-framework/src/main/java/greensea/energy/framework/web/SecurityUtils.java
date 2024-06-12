@@ -3,6 +3,7 @@ package greensea.energy.framework.web;
 import greensea.energy.common.exception.ErrorCode;
 import greensea.energy.common.exception.ServiceException;
 import greensea.energy.framework.domain.model.LoginUser;
+import greensea.energy.framework.domain.model.LoginUserToken;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -71,7 +72,6 @@ public class SecurityUtils {
             throw new ServiceException("获取用户信息异常", ErrorCode.ACCOUNT_DISABLE);
         }
     }
-
 
     /**
      * 是否登录，true登录

@@ -90,6 +90,11 @@
                 <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>4.2.0</version>
             </dependency>
+            <!--aop用于插入操作日志 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+            </dependency>
 
             <!-- 通用工具-->
             <dependency>

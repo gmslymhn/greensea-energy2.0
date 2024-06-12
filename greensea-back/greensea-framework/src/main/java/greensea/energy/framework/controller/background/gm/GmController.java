@@ -1,5 +1,7 @@
 package greensea.energy.framework.controller.background.gm;
 
+import greensea.energy.common.annotation.LoginLogAnnotation;
+import greensea.energy.common.annotation.SysLogAnnotation;
 import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.dto.AddGmDto;
 import greensea.energy.framework.domain.dto.AddUserDto;
@@ -40,6 +42,7 @@ public class GmController {
     @Autowired
     private IDirectoryService iDirectoryService;
     @PostMapping("/login")
+    @LoginLogAnnotation(loginType = "A")
     @Operation(summary = "管理员登陆",description= "用于管理员登陆")
     public R login(@RequestBody @Validated GmLoginDto gmLoginDto) {
         R verifyr = loginService.mayLogin(gmLoginDto.getGmAccount());
@@ -70,6 +73,7 @@ public class GmController {
     }
 
     @PreAuthorize("@ss.hasPermission('admin')")
+    @SysLogAnnotation(operModul = "系统管理>>用户管理", operType = "新增", operDesc = "新增管理员")
     @PostMapping("/addgm")
     @Operation(summary = "添加管理员")
     public R addGm(@RequestBody @Validated AddGmDto addGmDto) {
@@ -78,6 +82,7 @@ public class GmController {
     }
 
     @PreAuthorize("@ss.hasLoginType('A')")
+    @SysLogAnnotation(operModul = "系统管理>>用户管理", operType = "新增", operDesc = "新增用户")
     @PostMapping("/getselfmag")
     @Operation(summary = "获取自己的登陆信息",description = "登陆成功后第一时间通过token调取,可以获得管理员自己的信息")
     public R getSelfMsg() {
