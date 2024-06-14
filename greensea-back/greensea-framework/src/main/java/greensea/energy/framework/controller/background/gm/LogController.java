@@ -1,7 +1,9 @@
 package greensea.energy.framework.controller.background.gm;
 
+import greensea.energy.common.annotation.SysLogAnnotation;
 import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.dto.param.LoginLogParam;
+import greensea.energy.framework.domain.dto.param.LoginTokenParam;
 import greensea.energy.framework.domain.dto.param.SysLogParam;
 import greensea.energy.framework.service.ILogService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,8 +40,15 @@ public class LogController {
     }
     @PostMapping("/syslog")
     @PreAuthorize("@ss.hasPermission('admin')")
-    @Operation(summary = "登陆日志",description= "获取系统日志")
+    @Operation(summary = "系统日志",description= "获取系统日志")
     public R login(@RequestBody @Validated SysLogParam sysLogParam) {
         return iLogService.getSysLog(sysLogParam);
+    }
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @PostMapping("/logintoken")
+    @Operation(summary = "获取已登录的用户")
+    public R getLoginToken(@RequestBody @Validated LoginTokenParam loginTokenParam) {
+        R r = iLogService.getLoginToken(loginTokenParam);
+        return r;
     }
 }

@@ -90,6 +90,22 @@ public class TokenService {
         return null;
     }
 
+    public LoginUserToken getLoginUserToken2(String token) {
+
+        if (StringUtils.isNotEmpty(token)) {
+            try {
+                String tokenkey = token;
+                if (redisUtils.hasKey(getTokenKey(tokenkey))){
+                    //获取用户id
+                    LoginUserToken loginUserToken = (LoginUserToken) redisUtils.getCacheObject(getTokenKey(tokenkey));
+                    return loginUserToken;
+                }
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
+
     /**
      * 获取用户身份信息
      *

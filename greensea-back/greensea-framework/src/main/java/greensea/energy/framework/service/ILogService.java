@@ -2,6 +2,7 @@ package greensea.energy.framework.service;
 
 import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.dto.param.LoginLogParam;
+import greensea.energy.framework.domain.dto.param.LoginTokenParam;
 import greensea.energy.framework.domain.dto.param.SysLogParam;
 
 /**
@@ -15,4 +16,6 @@ public interface ILogService {
     R getLoginLog(LoginLogParam loginLogParam);
 
     R getSysLog(SysLogParam sysLogParam);
+
+    R getLoginToken(LoginTokenParam loginTokenParam);
 }

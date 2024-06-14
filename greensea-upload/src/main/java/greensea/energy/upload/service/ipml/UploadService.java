@@ -24,7 +24,7 @@ public class UploadService implements IUploadService {
     @Async
     @Override
     public CompletableFuture<String> uploadAsync(String tableName, UploadEntity uploadEntity){
-        Integer uploadState = uploadMapper.uplpad(tableName, uploadEntity);
+        Integer uploadState = uploadMapper.uplpad1(tableName, uploadEntity);
         if (null==uploadState||uploadState==0){
             return new CompletableFuture<>();
         }

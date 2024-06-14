@@ -3,7 +3,6 @@ package greensea.energy.framework.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.ObjectUtils;
-import greensea.energy.common.utils.http.IpUtil;
 import greensea.energy.common.utils.http.ServletUtils;
 import greensea.energy.framework.domain.dto.AddGmDto;
 import greensea.energy.framework.domain.dto.GmLoginDto;
@@ -151,6 +150,13 @@ public class GmServiceimpl implements IGmService {
     public R logoutGm(){
         HttpServletRequest request = ServletUtils.getRequest();
         LoginUserToken loginUserToken =  tokenService.getLoginUserToken(request);
+        tokenService.deleteToken(loginUserToken);
+        return R.success("退出成功！");
+    }
+
+    @Override
+    public R logoutBytoken(String token){
+        LoginUserToken loginUserToken =  tokenService.getLoginUserToken2(token);
         tokenService.deleteToken(loginUserToken);
         return R.success("退出成功！");
     }

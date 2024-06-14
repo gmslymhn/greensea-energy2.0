@@ -22,10 +22,10 @@ public class MybatisPlusConfig {
     /**
      * 分页插件
      */
-    @Bean
-    public PaginationInnerInterceptor paginationInterceptor() {
-        return new PaginationInnerInterceptor();
-    }
+//    @Bean
+//    public PaginationInnerInterceptor paginationInterceptor() {
+//        return new PaginationInnerInterceptor();
+//    }
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){
@@ -37,6 +37,8 @@ public class MybatisPlusConfig {
         //以拦截器的方式处理表名称
         //可以传递多个拦截器，即：可以传递多个表名处理器TableNameHandler
         mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
+
+        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         return mybatisPlusInterceptor;
     }
 }

@@ -1,13 +1,20 @@
 package greensea.energy;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.RedisUtils;
 import greensea.energy.device.mapper.DeviceUploadMapper;
+import greensea.energy.framework.domain.dto.param.LoginTokenParam;
+import greensea.energy.framework.domain.model.LoginUserToken;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
@@ -21,8 +28,27 @@ public class GreenseaEnergyApplicationTests {
 
     @Test
     public void test() {
-        deviceUploadMapper.createNewTable("3216");
-//        ResourceEntity resourceEntity = new ResourceEntity();
+//        deviceUploadMapper.createNewTable("3216");
+//        ResourceEntity resourceEntity = new ResourceEntity()
+        System.out.println( redisUtils.keys("login_token:"));
+        LoginTokenParam loginTokenParam = new LoginTokenParam();
+        Page<LoginUserToken> page = new Page<>(loginTokenParam.getPageNum(),loginTokenParam.getPageSize());
+        Set<String> keys = redisUtils.keys("login_token:");
+        List<LoginUserToken> loginUserTokenList = new ArrayList<>();
+        for (String key:keys){
+            LoginUserToken loginUserToken = (LoginUserToken) redisUtils.getCacheObject(key);
+            loginUserTokenList.add(loginUserToken);
+        }
+        // 计算分页的起始索引和结束索引
+        int start = Math.toIntExact(loginTokenParam.getPageNum() - 1) * loginTokenParam.getPageSize();
+        int end = Math.min(start + loginTokenParam.getPageSize(), loginUserTokenList.size());
+
+// 获取分页数据
+        List<LoginUserToken> pageList = loginUserTokenList.subList(start, end);
+        Page<LoginUserToken>loginUserTokenPage =new Page<>(loginTokenParam.getPageNum(),loginTokenParam.getPageSize(),loginUserTokenList.size());
+        loginUserTokenPage.setRecords(pageList);
+        System.out.println(pageList);
+        System.out.println(loginUserTokenPage);
 //        resourceEntity.setResourceDescription("3213123");
 //        resourceEntity.setResourceName("321");
 //        redisUtils.setCacheObject("resourceKey",resourceEntity);

@@ -18,5 +18,7 @@ public interface IGmService {
 
     R logoutGm();
 
+    R logoutBytoken(String token);
+
     R getGmSelfMsg();
 }

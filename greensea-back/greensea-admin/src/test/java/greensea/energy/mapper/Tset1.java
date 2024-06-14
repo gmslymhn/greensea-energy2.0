@@ -52,7 +52,7 @@ public class Tset1 {
     }
     @Test
     public void testPage() {
-        Page<GmEntity> page = new Page<>(1, 2);
+        Page<GmEntity> page = new Page<>(1, 4);
         IPage<GmEntity> userIPage = gmMapper.selectPage(page, new QueryWrapper<GmEntity>());
         assertThat(page).isSameAs(userIPage);
         System.out.println("总条数: " + userIPage.getTotal());

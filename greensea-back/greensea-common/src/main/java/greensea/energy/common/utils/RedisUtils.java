@@ -241,6 +241,7 @@ public class RedisUtils {
      * @return 对象列表
      */
     public Set<String> keys(final String pattern) {
-        return redisTemplate.keys(pattern);
+        return redisTemplate.keys(pattern.concat("*"));
     }
+
 }

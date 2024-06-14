@@ -6,6 +6,7 @@ import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.dto.AddGmDto;
 import greensea.energy.framework.domain.dto.AddUserDto;
 import greensea.energy.framework.domain.dto.GmLoginDto;
+import greensea.energy.framework.domain.dto.param.LoginTokenParam;
 import greensea.energy.framework.service.IDirectoryService;
 import greensea.energy.framework.service.IGmService;
 import greensea.energy.framework.web.SecurityUtils;
@@ -18,10 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName: GmController
@@ -60,6 +58,14 @@ public class GmController {
         return r;
     }
 
+    @PostMapping("/logout/user")
+    @Operation(summary = "登出用户")
+    @PreAuthorize("@ss.hasPermission('admin')")
+    public R logoutByToken(@RequestParam("token")String token) {
+        R r = iGmService.logoutBytoken(token);
+        return r;
+    }
+
     @PreAuthorize("@ss.hasLoginType('A')")
     @PostMapping("/getselfdirectory")
     @Operation(summary = "获取自己的后台目录",description = "获取管理员自己的后台目录")
@@ -73,7 +79,7 @@ public class GmController {
     }
 
     @PreAuthorize("@ss.hasPermission('admin')")
-    @SysLogAnnotation(operModul = "系统管理>>用户管理", operType = "新增", operDesc = "新增管理员")
+    @SysLogAnnotation(operModul = "用户管理>>管理员用户管理", operType = "新增", operDesc = "新增管理员")
     @PostMapping("/addgm")
     @Operation(summary = "添加管理员")
     public R addGm(@RequestBody @Validated AddGmDto addGmDto) {
@@ -82,7 +88,6 @@ public class GmController {
     }
 
     @PreAuthorize("@ss.hasLoginType('A')")
-    @SysLogAnnotation(operModul = "系统管理>>用户管理", operType = "新增", operDesc = "新增用户")
     @PostMapping("/getselfmag")
     @Operation(summary = "获取自己的登陆信息",description = "登陆成功后第一时间通过token调取,可以获得管理员自己的信息")
     public R getSelfMsg() {

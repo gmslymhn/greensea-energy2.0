@@ -21,6 +21,11 @@ public class LoginUserToken {
     private Integer userId;
 
     /**
+     * 用户账号
+     */
+    private String userAccount;
+
+    /**
      * 用户唯一标识
      */
     private String token;
@@ -52,6 +57,7 @@ public class LoginUserToken {
 
     public LoginUserToken(LoginUser loginUser) {
         this.userId = loginUser.getUserId();
+        this.userAccount = loginUser.getUserAccount();
         this.token = loginUser.getToken();
     }
 }
