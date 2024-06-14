@@ -1,6 +1,7 @@
 package greensea.energy.device.doman.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -19,6 +20,6 @@ public class UserDeviceTagEntity {
     @TableField("user_id")
     private Integer userId;
     @Schema(description = "设备id")
-    @TableField("device_id")
+    @TableId(value = "device_id")
     private Integer deviceId;
 }

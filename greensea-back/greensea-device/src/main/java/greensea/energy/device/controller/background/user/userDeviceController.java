@@ -44,7 +44,15 @@ public class userDeviceController {
     @PostMapping("/binddev")
     @Operation(summary = "绑定设备")
     @Parameter(name="deviceNumber",description="设备序列号",required=true)
-    public R getDeviceMsg(@RequestParam("deviceNumber") String deviceNumber) {
+    public R bindDevice(@RequestParam("deviceNumber") String deviceNumber) {
         return iUserDeviceService.bindDevice(SecurityUtils.getUserId(),deviceNumber);
+    }
+
+    @PreAuthorize("@ss.hasLoginType('B')")
+    @PostMapping("/untiedev")
+    @Operation(summary = "解绑设备")
+    @Parameter(name="deviceNumber",description="设备序列号",required=true)
+    public R guntieDevice(@RequestParam("deviceNumber") String deviceNumber) {
+        return iUserDeviceService.untieDevice(SecurityUtils.getUserId(),deviceNumber);
     }
 }

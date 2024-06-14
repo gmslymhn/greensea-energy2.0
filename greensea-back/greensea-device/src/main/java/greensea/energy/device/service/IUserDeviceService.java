@@ -16,4 +16,6 @@ public interface IUserDeviceService {
     R getDeviceMsgById2(Integer userId, Integer deviceId);
 
     R bindDevice(Integer userId, String deviceNumber);
+
+    R untieDevice(Integer userId, String deviceNumber);
 }

@@ -3,7 +3,6 @@ package greensea.energy.device.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import greensea.energy.common.constant.DeviceConstants;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.ObjectUtils;
 import greensea.energy.common.utils.StringUtils;
@@ -75,6 +74,24 @@ public class UserDeviceService implements IUserDeviceService {
             userDeviceTagEntity1.setDeviceId(deviceEntity.getDeviceId());
             userDeviceTagMapper.insert(userDeviceTagEntity1);
             return R.success("绑定成功！");
+        }
+        return R.error("设备不存在！");
+    }
+    @Override
+    public R untieDevice(Integer userId, String deviceNumber){
+        QueryWrapper<DeviceEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("device_number",deviceNumber);
+        DeviceEntity deviceEntity = deviceMapper.selectOne(queryWrapper);
+        if (ObjectUtils.isNotNull(deviceEntity)){
+            QueryWrapper<UserDeviceTagEntity> queryWrapper1 = new QueryWrapper<>();
+            queryWrapper1.eq("device_id",deviceEntity.getDeviceId())
+                    .eq("user_id",userId);
+            UserDeviceTagEntity userDeviceTagEntity = userDeviceTagMapper.selectOne(queryWrapper1);
+            if (ObjectUtils.isNull(userDeviceTagEntity)){
+                return R.error("设备未绑定！");
+            }
+            userDeviceTagMapper.deleteById(deviceEntity.getDeviceId());
+            return R.success("解绑成功！");
         }
         return R.error("设备不存在！");
     }
