@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("gre_dev")
+@TableName("dev_")
 @Schema(description = "设备图表信息")
 public class DeviceUploadEntity extends DeviceBaseEntity {
 

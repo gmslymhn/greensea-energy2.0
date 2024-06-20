@@ -82,7 +82,7 @@ public class GmDeviceService implements IGmDeviceService {
         deviceMsgEntity.setDeviceNumber(addDeviceDto.getDeviceNumber());
         deviceMsgEntity.setDelFlag(0);
         deviceMsgMapper.insert(deviceMsgEntity);
-        deviceUploadMapper.createNewTable("gre_dev_"+deviceEntity2.getDeviceId());
+        deviceUploadMapper.createNewTable("dev_"+deviceEntity2.getDeviceId());
         return R.success("添加成功！");
     }
 

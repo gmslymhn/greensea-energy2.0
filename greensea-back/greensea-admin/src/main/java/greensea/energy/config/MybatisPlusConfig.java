@@ -33,7 +33,7 @@ public class MybatisPlusConfig {
         //动态表名
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
         //可以传多个表名参数，指定哪些表使用DayTableNameHandler处理表名称
-        dynamicTableNameInnerInterceptor.setTableNameHandler(new DeviceTableNameHandler("gre_dev"));
+        dynamicTableNameInnerInterceptor.setTableNameHandler(new DeviceTableNameHandler("dev_"));
         //以拦截器的方式处理表名称
         //可以传递多个拦截器，即：可以传递多个表名处理器TableNameHandler
         mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);

@@ -33,7 +33,7 @@ public class DeviceTableNameHandler implements TableNameHandler {
     @Override
     public String dynamicTableName(String sql, String tableName) {
         if (this.tableNames.contains(tableName)){
-            return tableName + "_" + DEV_ID.get();  //表名增加后缀
+            return tableName  + DEV_ID.get();  //表名增加后缀
         }else{
             return tableName;   //表名原样返回
         }
