@@ -1,6 +1,7 @@
 package greensea.energy.upload.controller;
 
 import greensea.energy.upload.domain.entity.UploadEntity;
+import greensea.energy.upload.domain.entity.UploadEntity2;
 import greensea.energy.upload.service.IUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -50,7 +51,7 @@ public class UploadController {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
             CSVParser csvParser = new CSVParser(br, CSVFormat.DEFAULT);
-            CSVRecord csvRecord = csvParser.getRecords().get(5);
+            CSVRecord csvRecord = csvParser.getRecords().get(6);
             System.out.println(csvRecord);
             UploadEntity uploadEntity = new UploadEntity(Integer.valueOf(csvRecord.get(2)),
                     Integer.valueOf(csvRecord.get(3)),Integer.valueOf(csvRecord.get(4)),Float.valueOf(csvRecord.get(5))
@@ -60,7 +61,15 @@ public class UploadController {
                     Float.valueOf(csvRecord.get(13)),Float.valueOf(csvRecord.get(14)),Float.valueOf(csvRecord.get(15)),Float.valueOf(csvRecord.get(16)),
                     Float.valueOf(csvRecord.get(17)),Float.valueOf(csvRecord.get(18)),Float.valueOf(csvRecord.get(19)),Float.valueOf(csvRecord.get(20)),
                     Float.valueOf(csvRecord.get(21)));
-            iUploadService.uploadAsync("gre_dev_1",uploadEntity);
+            UploadEntity2 uploadEntity2 = new UploadEntity2(Float.valueOf(csvRecord.get(21)),Float.valueOf(csvRecord.get(22)),Float.valueOf(csvRecord.get(23)),
+                    Float.valueOf(csvRecord.get(24)),Float.valueOf(csvRecord.get(25)),Float.valueOf(csvRecord.get(26)),Float.valueOf(csvRecord.get(27)),
+                    Float.valueOf(csvRecord.get(28)),Float.valueOf(csvRecord.get(29)),Float.valueOf(csvRecord.get(30)),Float.valueOf(csvRecord.get(31)),
+                    Float.valueOf(csvRecord.get(32)),Float.valueOf(csvRecord.get(33)),Float.valueOf(csvRecord.get(34)),Float.valueOf(csvRecord.get(35)),
+                    Float.valueOf(csvRecord.get(36)),Float.valueOf(csvRecord.get(37)),Float.valueOf(csvRecord.get(38)),Float.valueOf(csvRecord.get(39)),
+                    Float.valueOf(csvRecord.get(40)),Float.valueOf(csvRecord.get(41)),Float.valueOf(csvRecord.get(42)),Float.valueOf(csvRecord.get(43)),
+                    Float.valueOf(csvRecord.get(44)),Float.valueOf(csvRecord.get(45)),Float.valueOf(csvRecord.get(46)),Float.valueOf(csvRecord.get(47)));
+            iUploadService.uploadAsync("dev_1",uploadEntity);
+            iUploadService.uploadAsync2("inv_1",uploadEntity2);
             csvParser.close();
             br.close();
         } catch (IOException e) {

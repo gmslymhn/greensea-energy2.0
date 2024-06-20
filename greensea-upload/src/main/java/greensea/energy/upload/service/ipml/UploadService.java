@@ -1,6 +1,7 @@
 package greensea.energy.upload.service.ipml;
 
 import greensea.energy.upload.domain.entity.UploadEntity;
+import greensea.energy.upload.domain.entity.UploadEntity2;
 import greensea.energy.upload.mapper.UploadMapper;
 import greensea.energy.upload.service.IUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,15 @@ public class UploadService implements IUploadService {
     @Override
     public CompletableFuture<String> uploadAsync(String tableName, UploadEntity uploadEntity){
         Integer uploadState = uploadMapper.uplpad1(tableName, uploadEntity);
+        if (null==uploadState||uploadState==0){
+            return new CompletableFuture<>();
+        }
+        return new CompletableFuture<>();
+    }
+    @Async
+    @Override
+    public CompletableFuture<String> uploadAsync2(String tableName, UploadEntity2 uploadEntity2){
+        Integer uploadState = uploadMapper.uplpad2(tableName, uploadEntity2);
         if (null==uploadState||uploadState==0){
             return new CompletableFuture<>();
         }
