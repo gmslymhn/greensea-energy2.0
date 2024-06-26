@@ -12,10 +12,7 @@ import greensea.energy.device.doman.entity.DeviceEntity;
 import greensea.energy.device.doman.entity.DeviceMsgEntity;
 import greensea.energy.device.doman.entity.GmDeviceTagEntity;
 import greensea.energy.device.doman.param.DeviceParam;
-import greensea.energy.device.mapper.DeviceMapper;
-import greensea.energy.device.mapper.DeviceMsgMapper;
-import greensea.energy.device.mapper.DeviceUploadMapper;
-import greensea.energy.device.mapper.GmDeviceTagMapper;
+import greensea.energy.device.mapper.*;
 import greensea.energy.device.service.IGmDeviceService;
 import greensea.energy.framework.web.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +30,9 @@ public class GmDeviceService implements IGmDeviceService {
     @Autowired
     private DeviceMapper deviceMapper;
     @Autowired
-    private DeviceUploadMapper deviceUploadMapper;
+    private DeviceUpload1Mapper deviceUpload1Mapper;
+    @Autowired
+    private DeviceUpload2Mapper deviceUpload2Mapper;
     @Autowired
     private DeviceMsgMapper deviceMsgMapper;
     @Autowired
@@ -82,7 +81,8 @@ public class GmDeviceService implements IGmDeviceService {
         deviceMsgEntity.setDeviceNumber(addDeviceDto.getDeviceNumber());
         deviceMsgEntity.setDelFlag(0);
         deviceMsgMapper.insert(deviceMsgEntity);
-        deviceUploadMapper.createNewTable("dev_"+deviceEntity2.getDeviceId());
+        deviceUpload1Mapper.createNewTable1("dev_"+deviceEntity2.getDeviceId());
+        deviceUpload2Mapper.createNewTable2("inv_"+deviceEntity2.getDeviceId());
         return R.success("添加成功！");
     }
 

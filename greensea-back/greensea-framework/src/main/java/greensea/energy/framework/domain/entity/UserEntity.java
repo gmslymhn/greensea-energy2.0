@@ -2,6 +2,7 @@ package greensea.energy.framework.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import greensea.energy.common.constant.UserConstants;
 import greensea.energy.framework.domain.dto.AddUserDto;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,6 +43,7 @@ public class UserEntity {
     /**
      * 密码
      */
+    @JsonIgnore
     @TableField("user_password")
     @Schema(description = "密码")
     @NotBlank(message = "用户密码不能为空")
@@ -59,6 +61,7 @@ public class UserEntity {
     /**
      * 用户类型
      */
+    @JsonIgnore
     @TableField("user_type")
     private String userType;
     /**

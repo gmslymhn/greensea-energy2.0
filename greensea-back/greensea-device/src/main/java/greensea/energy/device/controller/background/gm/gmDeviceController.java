@@ -4,6 +4,7 @@ import greensea.energy.common.domain.R;
 import greensea.energy.device.doman.dto.AddDeviceDto;
 import greensea.energy.device.doman.dto.UpdateDeviceDto;
 import greensea.energy.device.doman.param.DeviceParam;
+import greensea.energy.device.doman.param.GmDeviceParam;
 import greensea.energy.device.service.IGmDeviceService;
 import greensea.energy.framework.web.SecurityUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,6 +56,19 @@ public class gmDeviceController {
     public R updateDev(@RequestBody @Validated(UpdateDeviceDto.Update.class) UpdateDeviceDto updateDeviceDto) {
         R r = iGmDeviceService.updateDevice(updateDeviceDto);
         return r;
+    }
+
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @PostMapping("/gmdevlist")
+    @Operation(summary = "获取普通管理员的设备")
+    public R getGmDevs(@RequestBody @Validated GmDeviceParam gmDeviceParam) {
+        DeviceParam deviceParam = new DeviceParam();
+        deviceParam.setPageNum(gmDeviceParam.getPageNum());
+        deviceParam.setPageSize(gmDeviceParam.getPageSize());
+        deviceParam.setDeviceNumber(gmDeviceParam.getDeviceNumber());
+        deviceParam.setDeviceState(gmDeviceParam.getDeviceState());
+        deviceParam.setDeviceType(gmDeviceParam.getDeviceType());
+            return iGmDeviceService.getDeviceList1(gmDeviceParam.getGmId(),deviceParam);
     }
     @PreAuthorize("@ss.hasLoginType('A')")
     @PostMapping("/getdevmsg")

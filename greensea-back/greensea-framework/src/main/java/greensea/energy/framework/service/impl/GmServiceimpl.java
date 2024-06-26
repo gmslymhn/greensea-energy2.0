@@ -1,11 +1,15 @@
 package greensea.energy.framework.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.ObjectUtils;
+import greensea.energy.common.utils.StringUtils;
 import greensea.energy.common.utils.http.ServletUtils;
 import greensea.energy.framework.domain.dto.AddGmDto;
 import greensea.energy.framework.domain.dto.GmLoginDto;
+import greensea.energy.framework.domain.dto.param.GmParam;
 import greensea.energy.framework.domain.entity.*;
 import greensea.energy.framework.domain.model.LoginUser;
 import greensea.energy.framework.domain.model.LoginUserToken;
@@ -184,5 +188,22 @@ public class GmServiceimpl implements IGmService {
         msgVo.setRole(roleEntity.getRoleName());
         msgVo.setAvatarUrl("https://picabstract-preview-ftn.weiyun.com/ftn_pic_abs_v3/1060da23f3b113b2b5b463a79362a585073ab63910848e4cde3592cebca6e86ec9606c33bc453f781041bee899c21f71?pictype=scale&from=30113&version=3.3.3.3&fname=tx.jpg&size=750");
         return msgVo;
+    }
+
+    @Override
+    public R gmList(GmParam gmParam){
+        Page<GmEntity> page = new Page<>(gmParam.getPageNum(),gmParam.getPageSize());
+        QueryWrapper<GmEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(gmParam.getGmAccount()),"gm_account",gmParam.getGmAccount())
+                .eq(ObjectUtils.isNotNull(gmParam.getGmType()),"gm_type",gmParam.getGmType());
+        IPage<GmEntity> gmIPage = gmMapper.selectPage(page, queryWrapper);
+        return R.success(gmIPage);
+    }
+    @Override
+    public R getGmMsg(Integer gmId){
+        GmEntity gmEntity = gmMapper.selectById(gmId);
+        GmMsgEntity gmMsgEntity = gmMsgMapper.selectById(gmId);
+        MsgVo msgVo = get1(gmEntity,gmMsgEntity);
+        return R.success(msgVo);
     }
 }

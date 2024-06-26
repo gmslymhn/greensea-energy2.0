@@ -1,12 +1,15 @@
 package greensea.energy.framework.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.ObjectUtils;
-import greensea.energy.common.utils.http.IpUtil;
+import greensea.energy.common.utils.StringUtils;
 import greensea.energy.common.utils.http.ServletUtils;
 import greensea.energy.framework.domain.dto.AddUserDto;
 import greensea.energy.framework.domain.dto.UserLoginDto;
+import greensea.energy.framework.domain.dto.param.UserParam;
 import greensea.energy.framework.domain.entity.*;
 import greensea.energy.framework.domain.model.LoginUser;
 import greensea.energy.framework.domain.model.LoginUserToken;
@@ -194,5 +197,22 @@ public class UserServiceimpl implements IUserService {
         msgVo.setRole(roleEntity.getRoleName());
         msgVo.setAvatarUrl("https://picabstract-preview-ftn.weiyun.com/ftn_pic_abs_v3/1060da23f3b113b2b5b463a79362a585073ab63910848e4cde3592cebca6e86ec9606c33bc453f781041bee899c21f71?pictype=scale&from=30113&version=3.3.3.3&fname=tx.jpg&size=750");
         return msgVo;
+    }
+
+    @Override
+    public R userList(UserParam userParam){
+        Page<UserEntity> page = new Page<>(userParam.getPageNum(),userParam.getPageSize());
+        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(userParam.getUserAccount()),"user_account",userParam.getUserAccount())
+                .eq(ObjectUtils.isNotNull(userParam.getUserType()),"user_type",userParam.getUserType());
+        IPage<UserEntity> userIPage = userMapper.selectPage(page, queryWrapper);
+        return R.success(userIPage);
+    }
+    @Override
+    public R getUserMsg(Integer userId){
+        UserEntity userEntity = userMapper.selectById(userId);
+        UserMsgEntity userMsgEntity = userMsgMapper.selectById(userId);
+        MsgVo msgVo = get1(userEntity,userMsgEntity);
+        return R.success(msgVo);
     }
 }

@@ -3,6 +3,7 @@ package greensea.energy.framework.service;
 import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.dto.AddUserDto;
 import greensea.energy.framework.domain.dto.UserLoginDto;
+import greensea.energy.framework.domain.dto.param.UserParam;
 
 /**
  * @ClassName: IUserService
@@ -21,4 +22,8 @@ public interface IUserService {
     R logoutUser();
 
     R getUserSelfMsg();
+
+    R userList(UserParam userParam);
+
+    R getUserMsg(Integer userId);
 }

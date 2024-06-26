@@ -1,9 +1,8 @@
 package greensea.energy;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.RedisUtils;
-import greensea.energy.device.mapper.DeviceUploadMapper;
+import greensea.energy.device.mapper.DeviceUpload1Mapper;
 import greensea.energy.framework.domain.dto.param.LoginTokenParam;
 import greensea.energy.framework.domain.model.LoginUserToken;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,7 +22,7 @@ public class GreenseaEnergyApplicationTests {
     @Autowired
     private RedisUtils redisUtils;
     @Autowired
-    private DeviceUploadMapper deviceUploadMapper;
+    private DeviceUpload1Mapper deviceUpload1Mapper;
 
     @Test
     public void test() {

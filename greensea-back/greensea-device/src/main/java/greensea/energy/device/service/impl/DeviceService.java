@@ -4,7 +4,7 @@ import greensea.energy.common.domain.R;
 import greensea.energy.device.doman.entity.DeviceUploadEntity;
 import greensea.energy.device.doman.vo.ChartVo;
 import greensea.energy.device.header.DeviceTableNameHandler;
-import greensea.energy.device.mapper.DeviceUploadMapper;
+import greensea.energy.device.mapper.DeviceUpload1Mapper;
 import greensea.energy.device.service.IDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +23,12 @@ import java.util.List;
 @Service
 public class DeviceService implements IDeviceService {
     @Autowired
-    private DeviceUploadMapper deviceUploadMapper;
+    private DeviceUpload1Mapper deviceUpload1Mapper;
 
     @Override
     public R testChart(){
         DeviceTableNameHandler.setData("1");
-        List<DeviceUploadEntity> list = deviceUploadMapper.selectList(null);
+        List<DeviceUploadEntity> list = deviceUpload1Mapper.selectList(null);
         // 用完即销毁
         DeviceTableNameHandler.removeData();
         List<ChartVo> chartVos = new ArrayList<>();

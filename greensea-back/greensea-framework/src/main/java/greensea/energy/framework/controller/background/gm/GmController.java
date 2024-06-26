@@ -61,6 +61,7 @@ public class GmController {
     @PostMapping("/logout/user")
     @Operation(summary = "登出用户")
     @PreAuthorize("@ss.hasPermission('admin')")
+    @SysLogAnnotation(operModul = "用户管理>>登陆管理", operType = "强退", operDesc = "强退用户")
     public R logoutByToken(@RequestParam("token")String token) {
         R r = iGmService.logoutBytoken(token);
         return r;

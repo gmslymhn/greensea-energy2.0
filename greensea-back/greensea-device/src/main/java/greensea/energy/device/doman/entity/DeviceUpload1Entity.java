@@ -3,26 +3,24 @@ package greensea.energy.device.doman.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import greensea.energy.device.doman.entity.DeviceBaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @ClassName: DeviceEntity
- * @Description: 设备信息
+ * @ClassName: DeviceUpload1Entity
+ * @Description:
  * @Author: gmslymhn
- * @CreateTime: 2024-06-08 01:40
+ * @CreateTime: 2024-06-20 20:36
  * @Version: 1.0
  **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("dev_")
-@Schema(description = "设备图表信息")
-public class DeviceUploadEntity extends DeviceBaseEntity {
-
+@TableName("inv_")
+@Schema(description = "设备图表信息1")
+public class DeviceUpload1Entity {
     /**
      * id
      */

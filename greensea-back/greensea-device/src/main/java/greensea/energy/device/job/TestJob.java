@@ -1,79 +1,41 @@
-package greensea.energy.mapper;
+package greensea.energy.device.job;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xxl.job.core.biz.model.ReturnT;
+import com.xxl.job.core.context.XxlJobHelper;
+import com.xxl.job.core.handler.annotation.XxlJob;
 import greensea.energy.device.doman.entity.DeviceUploadEntity;
 import greensea.energy.device.header.DeviceTableNameHandler;
 import greensea.energy.device.mapper.DeviceUpload1Mapper;
-import greensea.energy.framework.domain.entity.GmEntity;
-import greensea.energy.framework.jwt.JwtUtil;
-import greensea.energy.framework.mapper.GmMapper;
-import greensea.energy.framework.mapper.RoleMapper;
-import greensea.energy.framework.mapper.UserGmMapper;
+import greensea.energy.device.mapper.DeviceUpload2Mapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Random;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
 /**
- * @ClassName: Tset1
+ * @ClassName: TestJob
  * @Description:
  * @Author: gmslymhn
- * @CreateTime: 2024-05-19 17:24
+ * @CreateTime: 2024-06-22 15:11
  * @Version: 1.0
  **/
-@RunWith(SpringRunner.class)
-@SpringBootTest
 @Slf4j
-public class Tset1 {
+@Component
+public class TestJob {
     @Autowired
-    private GmMapper gmMapper;
+    private DeviceUpload1Mapper deviceUpload1Mapper;
     @Autowired
-    private UserGmMapper userGmMapper;
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private RoleMapper roleMapper;
-    @Autowired
-    private DeviceUpload1Mapper deviceMapper;
-    @Test
-    public void testInsert() {
-        GmEntity gmEntity = new GmEntity();
-        gmEntity.setGmAccount("321");
-        gmMapper.insert(gmEntity);
+    private DeviceUpload2Mapper deviceUpload2Mapper;
+    @XxlJob("testJob")
+    public ReturnT<String> testJob(String date) {
+        log.info("---------testJob定时任务执行成功--------");
+        XxlJobHelper.log("---------testJob定时任务执行成功--------");
+        return ReturnT.SUCCESS;
     }
-    @Test
-    public void testPage() {
-        Page<GmEntity> page = new Page<>(1, 4);
-        IPage<GmEntity> userIPage = gmMapper.selectPage(page, new QueryWrapper<GmEntity>());
-        assertThat(page).isSameAs(userIPage);
-        System.out.println("总条数: " + userIPage.getTotal());
-        System.out.println("当前页数: " + userIPage.getCurrent());
-        System.out.println("当前每页显示数: " + userIPage.getSize());
-        System.out.println("记录列表: " + userIPage.getRecords());
-    }
-    @Test
-    public void testJwt(){
-        String token = jwtUtil.generateToken("321");
-        System.out.println(token);
-        System.out.println(jwtUtil.getToken(token));
-    }
-    @Test
-    public void test1() throws Exception {
-//        DeviceTableNameHandler.setData("1");
-//        List<DeviceUploadEntity> list = deviceMapper.selectList(null);
-//        // 用完即销毁
-//        DeviceTableNameHandler.removeData();
-//        System.out.println(list);
+    @XxlJob("uploadJob")
+    public ReturnT<String> uploadJob() throws Exception {
         DeviceTableNameHandler.setData("1");
         DeviceUploadEntity deviceUploadEntity = new DeviceUploadEntity();
         deviceUploadEntity.setSysFaultLvl(randomInteger(0,15));
@@ -97,9 +59,11 @@ public class Tset1 {
         deviceUploadEntity.setSbmsVolt(randomFloat(0f,1000f));
         deviceUploadEntity.setSbmsCur(randomFloat(0f,1000f));
         deviceUploadEntity.setSbmsSOC(randomFloat(0f,100f));
-        deviceMapper.insert(deviceUploadEntity);
+        deviceUpload1Mapper.insert(deviceUploadEntity);
         // 用完即销毁
         DeviceTableNameHandler.removeData();
+        log.info("---------testJob定时任务执行成功--------");
+        return ReturnT.SUCCESS;
     }
     public float randomFloat(float min,float max) throws Exception {
 //        float min = 1f;

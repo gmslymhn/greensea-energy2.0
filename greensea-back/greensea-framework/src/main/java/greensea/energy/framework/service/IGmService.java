@@ -3,6 +3,7 @@ package greensea.energy.framework.service;
 import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.dto.AddGmDto;
 import greensea.energy.framework.domain.dto.GmLoginDto;
+import greensea.energy.framework.domain.dto.param.GmParam;
 
 /**
  * @ClassName: IGmService
@@ -21,4 +22,8 @@ public interface IGmService {
     R logoutBytoken(String token);
 
     R getGmSelfMsg();
+
+    R gmList(GmParam gmParam);
+
+    R getGmMsg(Integer gmId);
 }

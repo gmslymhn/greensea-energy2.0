@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
  * @Version: 1.0
  **/
 @DS("slave")
-public interface DeviceUploadMapper extends BaseMapper<DeviceUploadEntity> {
+public interface DeviceUpload1Mapper extends BaseMapper<DeviceUploadEntity> {
     /**
      * 动态建表
      *
@@ -46,6 +46,6 @@ public interface DeviceUploadMapper extends BaseMapper<DeviceUploadEntity> {
             "  `sbms_soc` float NULL DEFAULT NULL COMMENT '大锂电池SOC',\n" +
             "  `upload_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '上传时间精确到秒',\n" +
             "  PRIMARY KEY (`id`) USING BTREE\n" +
-            ") ENGINE = InnoDB AUTO_INCREMENT = 142 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;\n")
-    int createNewTable(@Param("tableName") String tableName);
+            ") ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;\n")
+    int createNewTable1(@Param("tableName") String tableName);
 }

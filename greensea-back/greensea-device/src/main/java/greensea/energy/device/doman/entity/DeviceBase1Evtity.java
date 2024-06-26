@@ -1,9 +1,12 @@
 package greensea.energy.device.doman.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 /**
  * @ClassName: DeviceBaseEvtity1
@@ -15,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeviceBaseEvtity1 {
+public class DeviceBase1Evtity {
     /**
      * 逆变器当日发电量/kWh
      */
@@ -151,4 +154,10 @@ public class DeviceBaseEvtity1 {
      */
     @TableField("inv_fault")
     Float invFault;
+    /**
+     * 上传时间
+     */
+    @Schema(description = "上传时间")
+    @TableField("upload_time")
+    private LocalDateTime uploadTime;
 }

@@ -2,6 +2,7 @@ package greensea.energy.framework.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import greensea.energy.common.constant.UserConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -41,6 +42,7 @@ public class GmEntity {
     /**
      * 密码
      */
+    @JsonIgnore
     @TableField("gm_password")
     @Schema(description = "密码")
     @NotBlank(message = "管理员密码不能为空")
@@ -58,6 +60,7 @@ public class GmEntity {
     /**
      * 归属部门
      */
+    @JsonIgnore
     @TableField("gm_type")
     private String gmType;
     /**

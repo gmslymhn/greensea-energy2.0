@@ -44,7 +44,7 @@ public class DeviceBaseEntity implements Serializable {
      * 燃料电池电堆功率/Kw
      */
     @Schema(description = "燃料电池电堆功率/Kw")
-    @TableField("fc_sys_power")
+    @TableField("fc_stack_power")
     private Float fcStackPower;
     /**
      * 燃料电池电压/V
