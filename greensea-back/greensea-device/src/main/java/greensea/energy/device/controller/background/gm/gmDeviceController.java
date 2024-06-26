@@ -5,6 +5,7 @@ import greensea.energy.device.doman.dto.AddDeviceDto;
 import greensea.energy.device.doman.dto.UpdateDeviceDto;
 import greensea.energy.device.doman.param.DeviceParam;
 import greensea.energy.device.doman.param.GmDeviceParam;
+import greensea.energy.device.doman.param.UserDeviceParam;
 import greensea.energy.device.service.IGmDeviceService;
 import greensea.energy.framework.web.SecurityUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,6 +70,18 @@ public class gmDeviceController {
         deviceParam.setDeviceState(gmDeviceParam.getDeviceState());
         deviceParam.setDeviceType(gmDeviceParam.getDeviceType());
             return iGmDeviceService.getDeviceList1(gmDeviceParam.getGmId(),deviceParam);
+    }
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @PostMapping("/userdevlist")
+    @Operation(summary = "获取用户的设备")
+    public R getUserDevs(@RequestBody @Validated UserDeviceParam userDeviceParam) {
+        DeviceParam deviceParam = new DeviceParam();
+        deviceParam.setPageNum(userDeviceParam.getPageNum());
+        deviceParam.setPageSize(userDeviceParam.getPageSize());
+        deviceParam.setDeviceNumber(userDeviceParam.getDeviceNumber());
+        deviceParam.setDeviceState(userDeviceParam.getDeviceState());
+        deviceParam.setDeviceType(userDeviceParam.getDeviceType());
+        return iGmDeviceService.getDeviceList1(userDeviceParam.getUserId(),deviceParam);
     }
     @PreAuthorize("@ss.hasLoginType('A')")
     @PostMapping("/getdevmsg")
