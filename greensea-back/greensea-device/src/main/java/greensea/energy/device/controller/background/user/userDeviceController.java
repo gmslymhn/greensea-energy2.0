@@ -1,7 +1,7 @@
 package greensea.energy.device.controller.background.user;
 
 import greensea.energy.common.domain.R;
-import greensea.energy.device.doman.param.DeviceParam;
+import greensea.energy.device.domain.param.DeviceParam;
 import greensea.energy.device.service.IUserDeviceService;
 import greensea.energy.framework.web.SecurityUtils;
 import io.swagger.v3.oas.annotations.Operation;

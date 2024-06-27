@@ -3,14 +3,17 @@ package greensea.energy.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import greensea.energy.device.doman.entity.DeviceUploadEntity;
+import greensea.energy.common.utils.RedisUtils;
+import greensea.energy.device.domain.entity.DeviceEntity;
+import greensea.energy.device.domain.entity.DeviceUploadEntity;
 import greensea.energy.device.header.DeviceTableNameHandler;
+import greensea.energy.device.mapper.DeviceMapper;
 import greensea.energy.device.mapper.DeviceUpload1Mapper;
 import greensea.energy.framework.domain.entity.GmEntity;
 import greensea.energy.framework.jwt.JwtUtil;
 import greensea.energy.framework.mapper.GmMapper;
-import greensea.energy.framework.mapper.RoleMapper;
 import greensea.energy.framework.mapper.UserGmMapper;
+import greensea.energy.upload.domain.model.Device;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,9 +45,11 @@ public class Tset1 {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
-    private RoleMapper roleMapper;
+    private RedisUtils redisUtils;
     @Autowired
-    private DeviceUpload1Mapper deviceMapper;
+    private DeviceMapper deviceMapper;
+    @Autowired
+    private DeviceUpload1Mapper deviceUpload1Mapper;
     @Test
     public void testInsert() {
         GmEntity gmEntity = new GmEntity();
@@ -63,9 +68,16 @@ public class Tset1 {
     }
     @Test
     public void testJwt(){
-        String token = jwtUtil.generateToken("321");
-        System.out.println(token);
-        System.out.println(jwtUtil.getToken(token));
+        List<DeviceEntity> deviceEntityList = deviceMapper.selectList(null);
+        for (DeviceEntity deviceEntity:deviceEntityList){
+            Device device = new Device();
+            device.setDeviceNumber(deviceEntity.getDeviceNumber());
+            device.setDeviceId(deviceEntity.getDeviceId());
+            redisUtils.setCacheObject("device_number:"+deviceEntity.getDeviceNumber(),device);
+        }
+//        String token = jwtUtil.generateToken("321");
+//        System.out.println(token);
+//        System.out.println(jwtUtil.getToken(token));
     }
     @Test
     public void test1() throws Exception {
@@ -97,7 +109,7 @@ public class Tset1 {
         deviceUploadEntity.setSbmsVolt(randomFloat(0f,1000f));
         deviceUploadEntity.setSbmsCur(randomFloat(0f,1000f));
         deviceUploadEntity.setSbmsSOC(randomFloat(0f,100f));
-        deviceMapper.insert(deviceUploadEntity);
+        deviceUpload1Mapper.insert(deviceUploadEntity);
         // 用完即销毁
         DeviceTableNameHandler.removeData();
     }

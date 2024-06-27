@@ -2,7 +2,7 @@ package greensea.energy.device.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import greensea.energy.device.doman.entity.DeviceUpload1Entity;
+import greensea.energy.device.domain.entity.DeviceUpload1Entity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 

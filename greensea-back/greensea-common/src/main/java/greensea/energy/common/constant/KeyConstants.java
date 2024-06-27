@@ -43,4 +43,9 @@ public class KeyConstants {
      */
     public static final String REGISTER_VERIFCATION_FREQUENCY = "register_verifcation_frequency:";
 
+    /**
+     *  设备token
+     */
+    public static final String DEVICE_YOKEN = "device_token:";
+
 }

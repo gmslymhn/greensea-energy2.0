@@ -1,8 +1,8 @@
 package greensea.energy.device.service.impl;
 
 import greensea.energy.common.domain.R;
-import greensea.energy.device.doman.entity.DeviceUploadEntity;
-import greensea.energy.device.doman.vo.ChartVo;
+import greensea.energy.device.domain.entity.DeviceUploadEntity;
+import greensea.energy.device.domain.vo.ChartVo;
 import greensea.energy.device.header.DeviceTableNameHandler;
 import greensea.energy.device.mapper.DeviceUpload1Mapper;
 import greensea.energy.device.service.IDeviceService;

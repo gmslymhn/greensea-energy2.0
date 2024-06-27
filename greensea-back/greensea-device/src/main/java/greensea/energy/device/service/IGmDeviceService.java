@@ -1,9 +1,9 @@
 package greensea.energy.device.service;
 
 import greensea.energy.common.domain.R;
-import greensea.energy.device.doman.dto.AddDeviceDto;
-import greensea.energy.device.doman.dto.UpdateDeviceDto;
-import greensea.energy.device.doman.param.DeviceParam;
+import greensea.energy.device.domain.dto.AddDeviceDto;
+import greensea.energy.device.domain.dto.UpdateDeviceDto;
+import greensea.energy.device.domain.param.DeviceParam;
 
 /**
  * @ClassName: IDeviceService

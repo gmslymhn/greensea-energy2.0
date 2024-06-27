@@ -1,7 +1,7 @@
 package greensea.energy.device.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import greensea.energy.device.doman.entity.GmDeviceTagEntity;
+import greensea.energy.device.domain.entity.GmDeviceTagEntity;
 
 /**
  * @ClassName: GmDeviceMapper

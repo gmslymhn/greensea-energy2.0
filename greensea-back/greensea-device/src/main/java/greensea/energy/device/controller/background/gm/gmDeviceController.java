@@ -1,11 +1,11 @@
 package greensea.energy.device.controller.background.gm;
 
 import greensea.energy.common.domain.R;
-import greensea.energy.device.doman.dto.AddDeviceDto;
-import greensea.energy.device.doman.dto.UpdateDeviceDto;
-import greensea.energy.device.doman.param.DeviceParam;
-import greensea.energy.device.doman.param.GmDeviceParam;
-import greensea.energy.device.doman.param.UserDeviceParam;
+import greensea.energy.device.domain.dto.AddDeviceDto;
+import greensea.energy.device.domain.dto.UpdateDeviceDto;
+import greensea.energy.device.domain.param.DeviceParam;
+import greensea.energy.device.domain.param.GmDeviceParam;
+import greensea.energy.device.domain.param.UserDeviceParam;
 import greensea.energy.device.service.IGmDeviceService;
 import greensea.energy.framework.web.SecurityUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -104,4 +104,5 @@ public class gmDeviceController {
         R r = iGmDeviceService.deleteDevice(deviceId,deviceNumber);
         return r;
     }
+
 }

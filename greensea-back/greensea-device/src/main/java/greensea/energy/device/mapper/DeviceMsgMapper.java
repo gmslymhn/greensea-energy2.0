@@ -1,9 +1,7 @@
 package greensea.energy.device.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import greensea.energy.device.doman.entity.DeviceMsgEntity;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
+import greensea.energy.device.domain.entity.DeviceMsgEntity;
 
 /**
  * @ClassName: DeviceMsgMapper

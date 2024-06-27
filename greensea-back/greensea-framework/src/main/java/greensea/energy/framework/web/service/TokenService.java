@@ -244,9 +244,9 @@ public class TokenService {
     }
 
 
-    public String getTokenKey(String token) {
-        return KeyConstants.LOGIN_TOKEN_KEY + token;
-    }
+        public String getTokenKey(String token) {
+            return KeyConstants.LOGIN_TOKEN_KEY + token;
+        }
 
     public String getLoginKey(Integer userId) {
         return KeyConstants.LOGIN_USER_KEY + userId;
