@@ -98,13 +98,6 @@
             <version>1.2.20</version>
         </dependency>
 
-        <!--        xxl-job-->
-        <dependency>
-            <groupId>com.xuxueli</groupId>
-            <artifactId>xxl-job-core</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
         <!--        MySQL数据库的Java连接器-->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -117,14 +110,6 @@
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>4.1.0</version>
         </dependency>
-
-        <!--        xxl-job-->
-        <dependency>
-            <groupId>com.xuxueli</groupId>
-            <artifactId>xxl-job-core</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
         <!--        Spring Boot应用程序的测试所需的依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
