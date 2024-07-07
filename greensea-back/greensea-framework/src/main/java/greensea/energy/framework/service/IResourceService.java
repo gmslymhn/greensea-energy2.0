@@ -1,7 +1,9 @@
 package greensea.energy.framework.service;
 
+import greensea.energy.common.domain.R;
 import greensea.energy.framework.mapper.ResourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @ClassName: IResourceService
@@ -12,4 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  **/
 public interface IResourceService {
 
+
+    R addResource(MultipartFile file, String fileDescription, Integer type);
+
+    R getResourceById(int resourceId);
 }

@@ -206,6 +206,7 @@ user:
     maxRetryCount: 5
     # 密码锁定时间（默认10分钟）
     lockTime: 10
+# 阿里云OSS配置
 
 
 # Logger Config

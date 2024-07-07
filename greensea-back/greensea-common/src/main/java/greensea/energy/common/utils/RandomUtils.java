@@ -1,5 +1,6 @@
 package greensea.energy.common.utils;
 
+import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
@@ -42,5 +43,10 @@ public class RandomUtils {
         }
         // 3、输出生成的字符串
         return code;
+    }
+
+    public static void main(String[] args) {
+        LocalDateTime time = LocalDateTime.now();
+        System.out.println(time);
     }
 }
