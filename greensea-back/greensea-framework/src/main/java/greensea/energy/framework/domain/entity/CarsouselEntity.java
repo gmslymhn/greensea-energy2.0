@@ -33,7 +33,7 @@ public class CarsouselEntity extends BaseEntity {
      */
     @TableField(value = "carousel_name")
     @Size(min = 1, max = 30, message = "轮播图名称必须在1~30字符之间")
-    private Integer carouselName;
+    private String carouselName;
     /**
      * 图片id
      */

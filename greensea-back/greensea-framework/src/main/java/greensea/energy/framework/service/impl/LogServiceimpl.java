@@ -43,7 +43,8 @@ public class LogServiceimpl implements ILogService {
         QueryWrapper<LoginLogEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(loginLogParam.getLoginIp()),"login_ip",loginLogParam.getLoginIp())
                 .eq(StringUtils.isNotBlank(loginLogParam.getUserAccount()),"user_account",loginLogParam.getUserAccount())
-                .eq("login_type",loginLogParam.getLoginType());
+                .eq("login_type",loginLogParam.getLoginType())
+                .orderByDesc("log_id");
         IPage<LoginLogEntity> loginLogIPage = loginLogMapper.selectPage(page, queryWrapper);
         return R.success(loginLogIPage);
     }
@@ -52,7 +53,8 @@ public class LogServiceimpl implements ILogService {
         Page<SysLogEntity> page = new Page<>(sysLogParam.getPageNum(),sysLogParam.getPageSize());
         QueryWrapper<SysLogEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(sysLogParam.getLoginIp()),"login_ip",sysLogParam.getLoginIp())
-                .eq(StringUtils.isNotBlank(sysLogParam.getUserAccount()),"user_account",sysLogParam.getUserAccount());
+                .eq(StringUtils.isNotBlank(sysLogParam.getUserAccount()),"user_account",sysLogParam.getUserAccount())
+                .orderByDesc("log_id");
         IPage<SysLogEntity> sysLogIPage = sysLogMapper.selectPage(page, queryWrapper);
         return R.success(sysLogIPage);
     }
