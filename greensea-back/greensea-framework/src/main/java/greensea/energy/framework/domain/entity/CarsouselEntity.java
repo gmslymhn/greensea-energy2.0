@@ -40,6 +40,12 @@ public class CarsouselEntity extends BaseEntity {
     @TableField("carousel_image_id")
     private Integer carouselImageId;
     /**
+     * 图片url
+     */
+    @TableField(exist = false)
+    private String carouselImageUrl;
+
+    /**
      * 状态
      */
     @TableField("state")

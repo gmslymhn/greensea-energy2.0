@@ -15,6 +15,8 @@ import greensea.energy.framework.web.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @ClassName: CarsouselServiceimpl
  * @Description:
@@ -65,6 +67,12 @@ public class CarsouselServiceimpl  implements ICarsouselService {
         QueryWrapper<CarsouselEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("sort");
         IPage<CarsouselEntity> carsouselIPage = carsouselMapper.selectPage(page, queryWrapper);
+        List<CarsouselEntity> carsouselEntityList = carsouselIPage.getRecords();
+        for (CarsouselEntity carsouselEntity:carsouselEntityList){
+            ResourceEntity resourceEntity = resourceMapper.selectById(carsouselEntity.getCarouselImageId());
+            carsouselEntity.setCarouselImageUrl(resourceEntity.getResourceUrl());
+        }
+        carsouselIPage.setRecords(carsouselEntityList);
         return R.success(carsouselIPage);
     }
 }
