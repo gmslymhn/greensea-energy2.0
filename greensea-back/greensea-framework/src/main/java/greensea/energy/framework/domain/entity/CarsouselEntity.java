@@ -26,33 +26,38 @@ public class CarsouselEntity extends BaseEntity {
     /**
      * 轮播图id
      */
+    @Schema(description = "轮播图id")
     @TableId(value = "carousel_id",type = IdType.AUTO)
     private Integer carouselId;
     /**
      * 轮播图名称
      */
+    @Schema(description = "轮播图名称")
     @TableField(value = "carousel_name")
     @Size(min = 1, max = 30, message = "轮播图名称必须在1~30字符之间")
     private String carouselName;
     /**
      * 图片id
      */
+    @Schema(description = "图片id")
     @TableField("carousel_image_id")
     private Integer carouselImageId;
     /**
      * 图片url
      */
+    @Schema(description = "图片url")
     @TableField(exist = false)
     private String carouselImageUrl;
-
     /**
      * 状态
      */
+    @Schema(description = "状态")
     @TableField("state")
     private Boolean state;
     /**
-     * 权重
+     * 排序
      */
+    @Schema(description = "排序")
     @TableField("sort")
     private Integer sort;
 }

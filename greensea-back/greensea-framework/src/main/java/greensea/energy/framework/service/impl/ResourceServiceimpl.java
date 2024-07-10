@@ -40,12 +40,14 @@ public class ResourceServiceimpl implements IResourceService {
         //获取文件后缀名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         String imagePath = null;
-        if(type == 3 && suffixName.equals(".md")){
-            imagePath ="Markdown/";
-        }else if(type==1 && (suffixName.equals(".jpg") || suffixName.equals(".png")||suffixName.equals(".jpeg"))){
+        if(type==1 && (suffixName.equals(".jpg") || suffixName.equals(".png")||suffixName.equals(".jpeg"))){
             imagePath ="Image/";
         }else if(type==2 && suffixName.equals(".mp4")){
             imagePath ="Video/";
+        }else if(type == 3 && suffixName.equals(".md")){
+            imagePath ="Markdown/";
+        }else if(type == 4 && suffixName.equals(".pdf")){
+            imagePath ="PDF/";
         }else {
             return R.error("文件格式错误！");
         }
@@ -103,4 +105,5 @@ public class ResourceServiceimpl implements IResourceService {
         resourceVo.setResourceUrl(iFileService.getTemporaryUrl(resourceId));
         return R.success(resourceVo);
     }
+
 }

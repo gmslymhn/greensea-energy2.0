@@ -36,6 +36,14 @@ public class ResourceController {
     public R handleFileUploadImage(MultipartFile file, String description) {
         return iResourceService.addResource(file, description, 1);
     }
+    @Operation(summary = "添加pdf",description ="添加资源仅支持.pdf 文件，调用本接口后需根据返回信息调用添加资源接口")
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @Parameter(name="file",description="上传文件",required=true)
+    @Parameter(name="description",description="文件描述")
+    @PostMapping("/resource/addPdf")
+    public R handleFileUploadPdf(MultipartFile file, String description) {
+        return iResourceService.addResource(file, description, 4);
+    }
     @Operation(summary = "获取资源")
     @PreAuthorize("@ss.hasPermission('admin')")
     @Parameter(name="resourceId",description="文件id")
