@@ -76,4 +76,21 @@ public class CarsouselServiceimpl  implements ICarsouselService {
         carsouselIPage.setRecords(carsouselEntityList);
         return R.success(carsouselIPage);
     }
+
+    @Override
+    public R getCarsousels(){
+        QueryWrapper<CarsouselEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sort")
+                .eq("state",true);
+        List<CarsouselEntity> carsouselEntityList = carsouselMapper.selectList(queryWrapper);
+        String[] carsousels = new String[carsouselEntityList.size()];
+        //使用for循环得到数组
+        int i = 0;
+        for (CarsouselEntity carsouselEntity:carsouselEntityList){
+            String url = fileServicel.getTemporaryUrl(carsouselEntity.getCarouselImageId());
+            carsousels[i] = url;
+            i++;
+        }
+        return R.success(carsousels);
+    }
 }

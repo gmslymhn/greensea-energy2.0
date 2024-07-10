@@ -17,4 +17,6 @@ public interface ICarsouselService {
     R updateCarsousel(CarsouselEntity carsouselEntity);
 
     R getCarsouselList(PageParam param);
+
+    R getCarsousels();
 }

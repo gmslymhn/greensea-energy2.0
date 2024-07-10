@@ -42,7 +42,7 @@ public class ResourceServiceimpl implements IResourceService {
         String imagePath = null;
         if(type == 3 && suffixName.equals(".md")){
             imagePath ="Markdown/";
-        }else if(type==1 && (suffixName.equals(".jpg") || suffixName.equals(".png"))){
+        }else if(type==1 && (suffixName.equals(".jpg") || suffixName.equals(".png")||suffixName.equals(".jpeg"))){
             imagePath ="Image/";
         }else if(type==2 && suffixName.equals(".mp4")){
             imagePath ="Video/";

@@ -28,7 +28,7 @@ public class ResourceController {
 
     @Autowired
     private IResourceService iResourceService;
-    @Operation(summary = "添加图片",description ="添加资源仅支持.jpg.png 文件，调用本接口后需根据返回信息调用添加资源接口")
+    @Operation(summary = "添加图片",description ="添加资源仅支持.jpg.png.jpeg 文件，调用本接口后需根据返回信息调用添加资源接口")
     @PreAuthorize("@ss.hasPermission('admin')")
     @Parameter(name="file",description="上传文件",required=true)
     @Parameter(name="description",description="文件描述")
