@@ -81,7 +81,7 @@ public class ResourceServiceimpl implements IResourceService {
             resourceVo.setResourceName(fileName1);
             resourceVo.setResourceDescription(resourceEntity1.getResourceDescription());
             resourceVo.setResourceType(type);
-            resourceVo.setResourceUrl(url);
+            resourceVo.setResourceUrl(iFileService.getTemporaryUrl(resourceEntity1.getResourceId()));
             return R.success(resourceVo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,7 +100,7 @@ public class ResourceServiceimpl implements IResourceService {
         resourceVo.setResourceName(resourceEntity.getResourceName());
         resourceVo.setResourceDescription(resourceEntity.getResourceDescription());
         resourceVo.setResourceType(resourceEntity.getResourceType());
-        resourceVo.setResourceUrl(resourceEntity.getResourceUrl());
+        resourceVo.setResourceUrl(iFileService.getTemporaryUrl(resourceId));
         return R.success(resourceVo);
     }
 }

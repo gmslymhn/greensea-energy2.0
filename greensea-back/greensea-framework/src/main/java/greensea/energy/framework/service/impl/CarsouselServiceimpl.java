@@ -30,6 +30,8 @@ public class CarsouselServiceimpl  implements ICarsouselService {
     private CarsouselMapper carsouselMapper;
     @Autowired
     private ResourceMapper resourceMapper;
+    @Autowired
+    private FileServiceImpl fileServicel;
     @Override
     public R addCarsousel(CarsouselEntity carsouselEntity){
         ResourceEntity resourceEntity = resourceMapper.selectById(carsouselEntity.getCarouselImageId());
@@ -69,8 +71,7 @@ public class CarsouselServiceimpl  implements ICarsouselService {
         IPage<CarsouselEntity> carsouselIPage = carsouselMapper.selectPage(page, queryWrapper);
         List<CarsouselEntity> carsouselEntityList = carsouselIPage.getRecords();
         for (CarsouselEntity carsouselEntity:carsouselEntityList){
-            ResourceEntity resourceEntity = resourceMapper.selectById(carsouselEntity.getCarouselImageId());
-            carsouselEntity.setCarouselImageUrl(resourceEntity.getResourceUrl());
+            carsouselEntity.setCarouselImageUrl(fileServicel.getTemporaryUrl(carsouselEntity.getCarouselImageId()));
         }
         carsouselIPage.setRecords(carsouselEntityList);
         return R.success(carsouselIPage);

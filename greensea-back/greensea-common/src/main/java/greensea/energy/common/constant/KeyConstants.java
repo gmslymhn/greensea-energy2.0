@@ -48,4 +48,8 @@ public class KeyConstants {
      */
     public static final String DEVICE_YOKEN = "device_token:";
 
+    /**
+     *  资源id
+     */
+    public static final String RESOURCE_ID = "resource_id:";
 }
