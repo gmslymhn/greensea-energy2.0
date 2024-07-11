@@ -137,6 +137,7 @@ public class GmServiceimpl implements IGmService {
         gmEntity.setGmState(true);
         gmEntity.setGmType("2");
         gmEntity.setLoginTotal(0);
+        gmEntity.setAreacode(addGmDto.getAreacode());
         gmEntity.setGmNickname(addGmDto.getGmNickname());
         gmEntity.setGmPassword(SecurityUtils.encryptPassword(addGmDto.getGmPassword()));
         return gmEntity;

@@ -53,4 +53,10 @@ public class AddGmDto {
     @Schema(description = "管理员邮箱")
     @NotBlank(message = "邮箱不能为空")
     private String gmEmail;
+    /**
+     * 管理区域
+     */
+    @Schema(description = "管理区域areacode")
+    @Size(min=2, max=2,message="管理区域areacode")
+    private String areacode;
 }
