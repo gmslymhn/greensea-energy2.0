@@ -72,9 +72,9 @@ public class DeviceEntity extends BaseEntity {
     /**
      * 设备mac
      */
-    @Schema(description = "设备mac")
-    @TableField("device_mac")
-    private String deviceMac;
+    @Schema(description = "areacode")
+    @TableField("areacode")
+    private String areacode;
     /**
      * 设备状态
      */

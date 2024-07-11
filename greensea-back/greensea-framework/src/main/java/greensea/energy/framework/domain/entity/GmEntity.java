@@ -94,6 +94,11 @@ public class GmEntity {
     @TableField("gm_state")
     private Boolean gmState;
     /**
+     * 管理员国家
+     */
+    @TableField("areacode")
+    private String areacode;
+    /**
      * 逻辑删除(1删除 0未删除)
      */
     @TableLogic

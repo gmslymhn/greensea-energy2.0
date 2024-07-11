@@ -52,15 +52,15 @@ public class UploadController {
         // 未获取到token，继续往后走，因为后面还有鉴权管理器等去判断是否拥有身份凭证，所以可以放行
         // 没有token相当于匿名访问，若有一些接口是需要权限的，则不能访问这些接口
         if (ObjectUtils.isNull(token)) {
-            return null;
+            return R.error("非法上传！");
         }
         log.info(token);
         Claims claims = jwtUtil.getClaimsByToken(token);
         if (claims == null) {
-            return null;
+            return R.error("非法上传！");
         }
         if (jwtUtil.isTokenExpired(claims.getExpiration())) {
-            return null;
+            return R.error("非法上传！");
         }
         DeviceToken deviceToken = tokenService.getDeviceToken(request);
         if (ObjectUtils.isNull(deviceToken)){
@@ -72,7 +72,7 @@ public class UploadController {
         return null;
     }
     @PostMapping("/token")
-    @Operation(summary = "json" ,description= "设备获取token")
+    @Operation(summary = "设备获取token" ,description= "设备获取token")
     public R getToken(@RequestBody @Validated TokenDto tokenDto, HttpServletRequest request) {
         Device device =tokenService.getDevice(tokenDto.getDeviceNumber());
         if (ObjectUtils.isNull(device)){

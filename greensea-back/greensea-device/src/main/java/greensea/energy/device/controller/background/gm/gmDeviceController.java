@@ -81,7 +81,7 @@ public class gmDeviceController {
         deviceParam.setDeviceNumber(userDeviceParam.getDeviceNumber());
         deviceParam.setDeviceState(userDeviceParam.getDeviceState());
         deviceParam.setDeviceType(userDeviceParam.getDeviceType());
-        return iGmDeviceService.getDeviceList1(userDeviceParam.getUserId(),deviceParam);
+        return iGmDeviceService.getDeviceList2(userDeviceParam.getUserId(),deviceParam);
     }
     @PreAuthorize("@ss.hasLoginType('A')")
     @PostMapping("/getdevmsg")

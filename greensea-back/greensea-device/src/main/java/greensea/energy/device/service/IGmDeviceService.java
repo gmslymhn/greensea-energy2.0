@@ -17,6 +17,8 @@ public interface IGmDeviceService {
 
     R getDeviceList1(Integer gmId, DeviceParam deviceParam);
 
+    R getDeviceList2(Integer userId, DeviceParam deviceParam);
+
     R addDevice(AddDeviceDto addDeviceDto);
 
     R updateDevice(UpdateDeviceDto updateDeviceDto);

@@ -47,6 +47,10 @@ public class KeyConstants {
      *  设备token
      */
     public static final String DEVICE_YOKEN = "device_token:";
+    /**
+     *  设备序列号
+     */
+    public static final String DEVICE_NUMBER = "device_number:";
 
     /**
      *  资源id
