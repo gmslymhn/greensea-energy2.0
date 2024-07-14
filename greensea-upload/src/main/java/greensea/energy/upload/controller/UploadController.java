@@ -1,5 +1,6 @@
 package greensea.energy.upload.controller;
 
+import greensea.energy.upload.annotation.AbnormalLogAnnotation;
 import greensea.energy.upload.domain.R;
 import greensea.energy.upload.domain.dto.TokenDto;
 import greensea.energy.upload.domain.dto.UploadDto;
@@ -45,6 +46,7 @@ public class UploadController {
     @Autowired
     private JwtUtil jwtUtil;
     @PostMapping("/upload")
+    @AbnormalLogAnnotation()
     @Operation(summary = "json" ,description= "设备数据上传")
     public R upload(@RequestBody @Validated UploadDto uploadDto,HttpServletRequest request, HttpServletResponse response) {
 
@@ -60,16 +62,17 @@ public class UploadController {
             return R.error("非法上传！");
         }
         if (jwtUtil.isTokenExpired(claims.getExpiration())) {
-            return R.error("非法上传！");
+            return R.error("Token过期！");
         }
         DeviceToken deviceToken = tokenService.getDeviceToken(request);
         if (ObjectUtils.isNull(deviceToken)){
-            return null;
+            return R.error("设备不存在！");
         }
         if (IpUtil.getIpAddress(request).equals(deviceToken.getDeviceIp())){
-            return R.success("上传成功！");
+            return R.error("数据异常！");
+//            return R.success("上传成功！");
         }
-        return null;
+        return R.error("非法上传！");
     }
     @PostMapping("/token")
     @Operation(summary = "设备获取token" ,description= "设备获取token")

@@ -2,7 +2,6 @@ package greensea.energy.framework.web;
 
 import eu.bitwalker.useragentutils.UserAgent;
 import greensea.energy.common.annotation.LoginLogAnnotation;
-import greensea.energy.common.annotation.SysLogAnnotation;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.http.AddressUtil;
 import greensea.energy.common.utils.http.IpUtil;
@@ -22,8 +21,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import java.lang.reflect.Method;
 

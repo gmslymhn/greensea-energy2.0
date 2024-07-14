@@ -62,12 +62,7 @@ public class GmEntity {
      */
     @JsonIgnore
     @TableField("gm_type")
-    private String gmType;
-    /**
-     * 管理员角色
-     */
-    @TableField(exist = false)
-    private Set<String> gmRole;
+    private Integer gmType;
     /**
      * 登陆次数
      */

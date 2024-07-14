@@ -3,7 +3,6 @@ package greensea.energy.common.validator;
 import greensea.energy.common.utils.StringUtils;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

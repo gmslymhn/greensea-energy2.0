@@ -135,7 +135,7 @@ public class GmServiceimpl implements IGmService {
         gmEntity.setGmId(userGmEntity.getId());
         gmEntity.setDelFlag(0);
         gmEntity.setGmState(true);
-        gmEntity.setGmType("2");
+        gmEntity.setGmType(addGmDto.getGmType());
         gmEntity.setLoginTotal(0);
         gmEntity.setAreacode(addGmDto.getAreacode());
         gmEntity.setGmNickname(addGmDto.getGmNickname());

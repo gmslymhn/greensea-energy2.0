@@ -84,6 +84,9 @@ public class GmController {
     @PostMapping("/addgm")
     @Operation(summary = "添加管理员")
     public R addGm(@RequestBody @Validated AddGmDto addGmDto) {
+        if (addGmDto.getGmType()==1){
+            return R.error("非法入侵！");
+        }
         R r = iGmService.addGm(addGmDto);
         return r;
     }

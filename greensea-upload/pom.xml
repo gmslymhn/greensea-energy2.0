@@ -98,6 +98,11 @@
             <version>1.2.20</version>
         </dependency>
 
+        <!--aop用于插入操作日志 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <!--        MySQL数据库的Java连接器-->
         <dependency>
             <groupId>com.mysql</groupId>

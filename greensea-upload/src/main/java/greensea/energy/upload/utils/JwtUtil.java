@@ -87,6 +87,8 @@ public class JwtUtil {
                 .getPayload();
         } catch (ExpiredJwtException e) {
             claims = e.getClaims();
+        }catch (IllegalArgumentException e){
+            return null;
         }
         return claims;
     }

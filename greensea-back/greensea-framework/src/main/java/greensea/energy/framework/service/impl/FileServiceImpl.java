@@ -123,7 +123,7 @@ public class FileServiceImpl implements IFileService {
         URL signedUrl = ossClient.generatePresignedUrl(request);
         String urlString = signedUrl.toString();
         //缓存过期时间比oss过期时间少一天
-        redisUtils.setCacheObject(key,urlString, expirationDay - 1,TimeUnit.DAYS);
+        redisUtils.setCacheObject(key,urlString, expirationDay - 1,TimeUnit.HOURS);
 //        RedisUtil.StringOps.setEx(uploadFileName, urlString, expirationDay - 1, TimeUnit.DAYS);
         // 关闭 OSS 客户端
 
