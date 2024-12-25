@@ -3,6 +3,7 @@ package greensea.energy.device.service;
 import greensea.energy.common.domain.R;
 import greensea.energy.device.domain.dto.AddDeviceDto;
 import greensea.energy.device.domain.dto.UpdateDeviceDto;
+import greensea.energy.device.domain.dto.UpdateDeviceDto2;
 import greensea.energy.device.domain.param.DeviceParam;
 
 /**
@@ -22,6 +23,8 @@ public interface IGmDeviceService {
     R addDevice(AddDeviceDto addDeviceDto);
 
     R updateDevice(UpdateDeviceDto updateDeviceDto);
+
+    R updateDevice2(UpdateDeviceDto2 updateDeviceDto2);
 
     R getDeviceMsgById(Integer deviceId);
 

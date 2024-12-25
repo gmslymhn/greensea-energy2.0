@@ -42,4 +42,12 @@ public class    Device {
     @Schema(description = "设备IP")
     @TableField("device_ip")
     private String deviceIp;
+
+    /**
+     * 设备IP
+     */
+    @Schema(description = "设备IP反算信息")
+    @TableField("device_ip")
+    private Address address;
+
 }

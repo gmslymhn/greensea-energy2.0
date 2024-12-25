@@ -19,5 +19,5 @@ public interface IProductService {
 
     R getProductList(ProductParam productParam);
 
-    R getProducts(PageParam param);
+    R getProducts(ProductParam productParam);
 }

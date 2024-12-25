@@ -1,6 +1,7 @@
 package greensea.energy.framework.controller.background.gm;
 
 import greensea.energy.common.annotation.LoginLogAnnotation;
+import greensea.energy.common.annotation.SysLogAnnotation;
 import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.PageParam;
 import greensea.energy.framework.domain.dto.GmLoginDto;
@@ -33,12 +34,14 @@ public class CarsouselController {
     private ICarsouselService iCarsouselService;
     @PostMapping("/addCarsousel")
     @PreAuthorize("@ss.hasPermission('admin')")
+    @SysLogAnnotation(operModul = "前台管理>>轮播图管理", operType = "新增", operDesc = "添加前端轮播图")
     @Operation(summary = "添加轮播图",description= "超级管理员state字段不会起作用，添加完成之后可以修改state")
     public R addCarsousel(@RequestBody @Validated CarsouselEntity carsouselEntity) {
         return iCarsouselService.addCarsousel(carsouselEntity);
     }
     @PostMapping("/updateCarsousel")
     @PreAuthorize("@ss.hasPermission('admin')")
+    @SysLogAnnotation(operModul = "前台管理>>轮播图管理", operType = "修改", operDesc = "修改前端轮播图")
     @Operation(summary = "修改轮播图",description= "超级管理员")
     public R updateCarsousel(@RequestBody @Validated CarsouselEntity carsouselEntity) {
         return iCarsouselService.updateCarsousel(carsouselEntity);

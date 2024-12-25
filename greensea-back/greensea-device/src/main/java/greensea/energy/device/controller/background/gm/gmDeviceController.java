@@ -1,8 +1,10 @@
 package greensea.energy.device.controller.background.gm;
 
+import greensea.energy.common.annotation.SysLogAnnotation;
 import greensea.energy.common.domain.R;
 import greensea.energy.device.domain.dto.AddDeviceDto;
 import greensea.energy.device.domain.dto.UpdateDeviceDto;
+import greensea.energy.device.domain.dto.UpdateDeviceDto2;
 import greensea.energy.device.domain.param.DeviceParam;
 import greensea.energy.device.domain.param.GmDeviceParam;
 import greensea.energy.device.domain.param.UserDeviceParam;
@@ -46,6 +48,7 @@ public class gmDeviceController {
 
     @PreAuthorize("@ss.hasPermission('admin')")
     @PostMapping("/adddev")
+    @SysLogAnnotation(operModul = "设备管理>>管理员设备管理", operType = "新增", operDesc = "添加设备")
     @Operation(summary = "添加设备（超管）",description = "超管才有权限调取")
     public R addDev(@RequestBody @Validated AddDeviceDto addDeviceDto ) {
         R r = iGmDeviceService.addDevice(addDeviceDto);
@@ -53,9 +56,19 @@ public class gmDeviceController {
     }
     @PreAuthorize("@ss.hasPermission('admin')")
     @PostMapping("/updatedev")
+    @SysLogAnnotation(operModul = "设备管理>>管理员设备管理", operType = "修改", operDesc = "修改设备")
     @Operation(summary = "修改设备（超管）",description = "超管才有权限调取")
     public R updateDev(@RequestBody @Validated(UpdateDeviceDto.Update.class) UpdateDeviceDto updateDeviceDto) {
         R r = iGmDeviceService.updateDevice(updateDeviceDto);
+        return r;
+    }
+
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @PostMapping("/updatedev2")
+    @SysLogAnnotation(operModul = "设备管理>>设备状态管理", operType = "启停设备", operDesc = "修改设备状态")
+    @Operation(summary = "修改设备（超管）启停",description = "超管才有权限调取")
+    public R updateDev2(@RequestBody @Validated UpdateDeviceDto2 updateDeviceDto2) {
+        R r = iGmDeviceService.updateDevice2(updateDeviceDto2);
         return r;
     }
 
@@ -97,6 +110,7 @@ public class gmDeviceController {
 
     @PreAuthorize("@ss.hasPermission('admin')")
     @PostMapping("/deletedev")
+    @SysLogAnnotation(operModul = "设备管理>>管理员设备管理", operType = "删除", operDesc = "删除设备")
     @Operation(summary = "删除设备（超管）",description = "超管才有权限调取")
     @Parameter(name="deviceId",description="设备id",required=true)
     @Parameter(name="deviceNumber",description="设备序列号",required=true)

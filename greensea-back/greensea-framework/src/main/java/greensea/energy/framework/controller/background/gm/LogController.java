@@ -35,14 +35,21 @@ public class LogController {
     @PostMapping("/loginlog")
     @PreAuthorize("@ss.hasPermission('admin')")
     @Operation(summary = "登陆日志",description= "获取登录日志")
-    public R login(@RequestBody @Validated LoginLogParam loginLogParam) {
+    public R loginlog(@RequestBody @Validated LoginLogParam loginLogParam) {
         return iLogService.getLoginLog(loginLogParam);
     }
     @PostMapping("/syslog")
     @PreAuthorize("@ss.hasPermission('admin')")
     @Operation(summary = "系统日志",description= "获取系统日志")
-    public R login(@RequestBody @Validated SysLogParam sysLogParam) {
+    public R syslog(@RequestBody @Validated SysLogParam sysLogParam) {
         return iLogService.getSysLog(sysLogParam);
+    }
+
+    @PostMapping("/devUpdateLog")
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @Operation(summary = "设备启停日志",description= "获取设备启停日志")
+    public R devUpdateLog(@RequestBody @Validated SysLogParam sysLogParam) {
+        return iLogService.getDevUpdateLog(sysLogParam);
     }
     @PreAuthorize("@ss.hasPermission('admin')")
     @PostMapping("/logintoken")

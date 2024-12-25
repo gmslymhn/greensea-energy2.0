@@ -9,6 +9,8 @@ import greensea.energy.common.utils.StringUtils;
 import greensea.energy.common.utils.http.ServletUtils;
 import greensea.energy.framework.domain.dto.AddGmDto;
 import greensea.energy.framework.domain.dto.GmLoginDto;
+import greensea.energy.framework.domain.dto.GmUpdatePasswordDto;
+import greensea.energy.framework.domain.dto.UpdateGmDto;
 import greensea.energy.framework.domain.dto.param.GmParam;
 import greensea.energy.framework.domain.entity.*;
 import greensea.energy.framework.domain.model.LoginUser;
@@ -58,6 +60,8 @@ public class GmServiceimpl implements IGmService {
     private RoleMapper roleMapper;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private FileServiceImpl fileServicel;
     @Override
     public R loginGm(GmLoginDto gmLoginDto){
         Authentication authentication = null;
@@ -105,18 +109,24 @@ public class GmServiceimpl implements IGmService {
         QueryWrapper<UserGmEntity> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.eq("email", addGmDto.getGmEmail());
         UserGmEntity userGmEntity1 = userGmMapper.selectOne(queryWrapper1);
+        QueryWrapper<GmEntity> queryWrapper2 = new QueryWrapper<>();
+        queryWrapper2.eq("areacode", addGmDto.getAreacode());
+        GmEntity gmEntity1 = gmMapper.selectOne(queryWrapper2);
         if (ObjectUtils.isNotNull(userGmEntity)) {
             return R.error("账号已注册！");
         }
         if(ObjectUtils.isNotNull(userGmEntity1)){
             return R.error("邮箱已注册！");
         }
+        if(ObjectUtils.isNotNull(gmEntity1)){
+            return R.error("对应国家的管理员已注册！");
+        }
         userGmEntity = get1(addGmDto);
         userGmMapper.insert(userGmEntity);
-        UserGmEntity userGmEntity2 = userGmMapper.selectOne(queryWrapper);
-        GmEntity gmEntity = get2(addGmDto,userGmEntity2);
+        UserGmEntity userGmEntity3 = userGmMapper.selectOne(queryWrapper);
+        GmEntity gmEntity = get2(addGmDto,userGmEntity3);
         gmMapper.insert(gmEntity);
-        GmMsgEntity gmMsgEntity =get3(addGmDto,userGmEntity2);
+        GmMsgEntity gmMsgEntity =get3(addGmDto,userGmEntity3);
         gmMsgMapper.insert(gmMsgEntity);
         return R.success("添加成功！");
     }
@@ -187,7 +197,11 @@ public class GmServiceimpl implements IGmService {
         msgVo.setLastLoginLocation(gmEntity.getLastLoginLocation());
         RoleEntity roleEntity = roleMapper.selectById(gmEntity.getGmType());
         msgVo.setRole(roleEntity.getRoleName());
-        msgVo.setAvatarUrl("https://picabstract-preview-ftn.weiyun.com/ftn_pic_abs_v3/1060da23f3b113b2b5b463a79362a585073ab63910848e4cde3592cebca6e86ec9606c33bc453f781041bee899c21f71?pictype=scale&from=30113&version=3.3.3.3&fname=tx.jpg&size=750");
+        if (ObjectUtils.isNotNull(gmMsgEntity.getGmAvatar())){
+            msgVo.setAvatarUrl(fileServicel.getTemporaryUrl(gmMsgEntity.getGmAvatar()));
+        } else {
+            msgVo.setAvatarUrl(fileServicel.getTemporaryUrl(1));
+        }
         return msgVo;
     }
 
@@ -206,5 +220,63 @@ public class GmServiceimpl implements IGmService {
         GmMsgEntity gmMsgEntity = gmMsgMapper.selectById(gmId);
         MsgVo msgVo = get1(gmEntity,gmMsgEntity);
         return R.success(msgVo);
+    }
+
+    @Override
+    public R updateGmMsg(UpdateGmDto updateGmDto){
+        UserGmEntity userGmEntity = userGmMapper.selectById(updateGmDto.getGmId());
+        if (ObjectUtils.isNull(userGmEntity)){
+            return R.error("管理员不存在！");
+        }
+        GmMsgEntity gmMsgEntity = new GmMsgEntity();
+        gmMsgEntity.setGmId(updateGmDto.getGmId());
+        if (StringUtils.isNotBlank(updateGmDto.getGmEmail())||ObjectUtils.isNotNull(updateGmDto.getState())){
+            userGmEntity.setEmail(updateGmDto.getGmEmail());
+            gmMsgEntity.setGmEmail(updateGmDto.getGmEmail());
+            userGmEntity.setState(updateGmDto.getState());
+            userGmMapper.updateById(userGmEntity);
+            gmMsgMapper.updateById(gmMsgEntity);
+        }
+        GmEntity gmEntity = new GmEntity();
+        gmEntity.setGmId(updateGmDto.getGmId());
+        if (StringUtils.isNotBlank(updateGmDto.getGmPassword())){
+            gmEntity.setGmPassword(SecurityUtils.encryptPassword(updateGmDto.getGmPassword()));
+            gmMapper.updateById(gmEntity);
+        }else if(StringUtils.isNotBlank(updateGmDto.getGmPassword())||StringUtils.isNotBlank(updateGmDto.getGmNickname())||ObjectUtils.isNotNull(updateGmDto.getState())){
+            gmEntity.setGmNickname(updateGmDto.getGmNickname());
+            gmEntity.setGmState(updateGmDto.getState());
+            gmMapper.updateById(gmEntity);
+        }
+        if (ObjectUtils.isNotNull(updateGmDto.getAvatarId())||ObjectUtils.isNotNull(updateGmDto.getGmPhone())){
+            gmMsgEntity.setGmAvatar(updateGmDto.getAvatarId());
+            gmMsgEntity.setGmPhone(updateGmDto.getGmPhone());
+            gmMsgMapper.updateById(gmMsgEntity);
+        }
+        return R.success("修改成功！");
+    }
+    @Override
+    public R updateGmPassword(GmUpdatePasswordDto gmUpdatePasswordDto){
+        GmEntity gmEntity = gmMapper.selectById(gmUpdatePasswordDto.getGmId());
+        if (ObjectUtils.isNull(gmEntity)){
+            return R.error("管理员不存在！");
+        }
+        if(SecurityUtils.matchesPassword(gmUpdatePasswordDto.getOldPassword(),gmEntity.getGmPassword())){
+            gmEntity.setGmPassword(SecurityUtils.encryptPassword(gmUpdatePasswordDto.getNewPassword()));
+            gmMapper.updateById(gmEntity);
+            logoutGm();
+            return R.success("修改成功！");
+        }
+        return R.error("原密码错误！");
+    }
+    @Override
+    public R daleteGmById(Integer gmId){
+        UserGmEntity userGmEntity = userGmMapper.selectById(gmId);
+        if (ObjectUtils.isNull(userGmEntity)){
+            return R.error("管理员不存在！");
+        }
+        gmMsgMapper.deleteById(gmId);
+        gmMapper.deleteById(gmId);
+        userGmMapper.deleteById(gmId);
+        return R.success("删除成功！");
     }
 }

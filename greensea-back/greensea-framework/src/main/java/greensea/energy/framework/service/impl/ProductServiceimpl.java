@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.ObjectUtils;
-import greensea.energy.framework.domain.PageParam;
 import greensea.energy.framework.domain.entity.ProductEntity;
 import greensea.energy.framework.domain.entity.ResourceEntity;
 import greensea.energy.framework.domain.param.ProductParam;
@@ -93,10 +92,12 @@ public class ProductServiceimpl implements IProductService {
         return R.success(productEntityIPage);
     }
     @Override
-    public R getProducts(PageParam param){
-        Page<ProductEntity> page = new Page<>(param.getPageNum(),param.getPageSize());
+    public R getProducts(ProductParam productParam){
+        Page<ProductEntity> page = new Page<>(productParam.getPageNum(),productParam.getPageSize());
         QueryWrapper<ProductEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("state",true)
+                .eq(StringUtils.isNoneBlank(productParam.getProductName()),"product_name",productParam.getProductName())
+                .eq(StringUtils.isNoneBlank(productParam.getProductType()),"product_type",productParam.getProductType())
                 .orderByAsc("sort");
         IPage<ProductEntity> productEntityIPage = productMapper.selectPage(page, queryWrapper);
         List<ProductVo> productVos = new ArrayList<>();

@@ -1,6 +1,6 @@
 package greensea.energy.common.utils.http;
 
-import com.alibaba.fastjson2.JSONObject;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
 import org.apache.hc.client5.http.async.methods.SimpleHttpRequests;
@@ -34,7 +34,6 @@ import org.apache.hc.core5.util.Timeout;
 
 import javax.net.ssl.SSLContext;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -44,7 +43,6 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

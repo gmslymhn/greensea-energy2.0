@@ -17,5 +17,7 @@ public interface IResourceService {
 
     R addResource(MultipartFile file, String fileDescription, Integer type);
 
+    R addUpdateResource(MultipartFile file, String fileDescription);
+
     R getResourceById(int resourceId);
 }

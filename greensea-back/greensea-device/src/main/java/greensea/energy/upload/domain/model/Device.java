@@ -1,6 +1,7 @@
 package greensea.energy.upload.domain.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import greensea.energy.upload.domain.dto.UploadDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,4 +43,14 @@ public class Device {
     @Schema(description = "设备IP")
     @TableField("device_ip")
     private String deviceIp;
+
+
+    /**
+     * 设备IP
+     */
+    @Schema(description = "设备IP反算信息")
+    @TableField("device_ip")
+    private Address address;
+
+
 }

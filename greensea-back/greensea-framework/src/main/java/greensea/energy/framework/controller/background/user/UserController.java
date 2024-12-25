@@ -5,9 +5,7 @@ import greensea.energy.common.annotation.LoginLogAnnotation;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.http.AddressUtil;
 import greensea.energy.common.utils.http.IpUtil;
-import greensea.energy.framework.domain.dto.AddUserDto;
-import greensea.energy.framework.domain.dto.UserLoginDto;
-import greensea.energy.framework.domain.dto.VerifyRegisterDto;
+import greensea.energy.framework.domain.dto.*;
 import greensea.energy.framework.service.IDirectoryService;
 import greensea.energy.framework.service.IUserService;
 import greensea.energy.framework.web.SecurityUtils;
@@ -101,27 +99,24 @@ public class UserController {
         return iUserService.getUserSelfMsg();
     }
 
-    @PostMapping("/test")
-    @Operation(summary = "测试")
-    public R test(HttpServletRequest httpServletRequest) {
 
-        UserAgent userAgent = UserAgent.parseUserAgentString(httpServletRequest.getHeader("User-Agent"));
-        //获取IP地址
-        String ip = IpUtil.getIpAddress(httpServletRequest);
-        System.out.println(ip);
-        //获取操作系统
-        String osName = userAgent.getOperatingSystem().getName();
-        System.out.println(osName);
-        //获取浏览器类型
-        String browser = userAgent.getBrowser().getName();
-        System.out.println(browser);
-        //获取登录地址
-        String location = AddressUtil.getAddressByIP(ip);
-        System.out.println(location);
 
-        return R.success();
+    @PostMapping("/updateSelfMsg")
+    @PreAuthorize("@ss.hasLoginType('B')")
+    @Operation(summary = "用户修改自己信息",description= "用户修改自己信息")
+    public R updateUserMsg(@RequestBody @Validated UpdateUserDto updateUserDto) {
+        updateUserDto.setUserId(SecurityUtils.getUserId());
+        updateUserDto.setUserPassword(null);
+        updateUserDto.setState(null);
+        return iUserService.updateUserMsg(updateUserDto);
     }
 
-
+    @PostMapping("/updateSelfPassword")
+    @PreAuthorize("@ss.hasLoginType('B')")
+    @Operation(summary = "用户修改自己密码",description= "用户修改自己密码")
+    public R updateGmMsg(@RequestBody @Validated UserUpdatePasswordDto userUpdatePasswordDto) {
+        userUpdatePasswordDto.setUserId(SecurityUtils.getUserId());
+        return iUserService.updateUserPassword(userUpdatePasswordDto);
+    }
 
 }

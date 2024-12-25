@@ -56,4 +56,18 @@ public class KeyConstants {
      *  资源id
      */
     public static final String RESOURCE_ID = "resource_id:";
+    /**
+     *  操作
+     */
+    public static final String CONTROLS_VERIFCATION_CODE = "controls_verifcation_code:";
+
+    /**
+     * 操作验证次数
+     */
+    public static final String CONTROLS_VERIFCATION_FREQUENCY = "controls_verifcation_frequency:";
+
+    /**
+     * 可以操作
+     */
+    public static final String MAY_CONTROLS = "may_controls:";
 }

@@ -2,7 +2,9 @@ package greensea.energy.framework.service;
 
 import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.dto.AddUserDto;
+import greensea.energy.framework.domain.dto.UpdateUserDto;
 import greensea.energy.framework.domain.dto.UserLoginDto;
+import greensea.energy.framework.domain.dto.UserUpdatePasswordDto;
 import greensea.energy.framework.domain.dto.param.UserParam;
 
 /**
@@ -26,4 +28,10 @@ public interface IUserService {
     R userList(UserParam userParam);
 
     R getUserMsg(Integer userId);
+
+    R updateUserMsg(UpdateUserDto updateUserDto);
+
+    R updateUserPassword(UserUpdatePasswordDto userUpdatePasswordDto);
+
+    R daleteUserById(Integer userId);
 }

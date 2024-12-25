@@ -7,8 +7,7 @@ import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.ObjectUtils;
 import greensea.energy.common.utils.StringUtils;
 import greensea.energy.common.utils.http.ServletUtils;
-import greensea.energy.framework.domain.dto.AddUserDto;
-import greensea.energy.framework.domain.dto.UserLoginDto;
+import greensea.energy.framework.domain.dto.*;
 import greensea.energy.framework.domain.dto.param.UserParam;
 import greensea.energy.framework.domain.entity.*;
 import greensea.energy.framework.domain.model.LoginUser;
@@ -58,6 +57,8 @@ public class UserServiceimpl implements IUserService {
     private RoleMapper roleMapper;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private FileServiceImpl fileServicel;
 
     @Override
     public R loginUser(UserLoginDto userLoginDto){
@@ -195,7 +196,11 @@ public class UserServiceimpl implements IUserService {
         msgVo.setLastLoginLocation(userEntity.getLastLoginLocation());
         RoleEntity roleEntity = roleMapper.selectById(userEntity.getUserType());
         msgVo.setRole(roleEntity.getRoleName());
-        msgVo.setAvatarUrl("https://picabstract-preview-ftn.weiyun.com/ftn_pic_abs_v3/1060da23f3b113b2b5b463a79362a585073ab63910848e4cde3592cebca6e86ec9606c33bc453f781041bee899c21f71?pictype=scale&from=30113&version=3.3.3.3&fname=tx.jpg&size=750");
+        if (ObjectUtils.isNotNull(userMsgEntity.getUserAvatar())){
+            msgVo.setAvatarUrl(fileServicel.getTemporaryUrl(userMsgEntity.getUserAvatar()));
+        } else {
+            msgVo.setAvatarUrl(fileServicel.getTemporaryUrl(1));
+        }
         return msgVo;
     }
 
@@ -214,5 +219,64 @@ public class UserServiceimpl implements IUserService {
         UserMsgEntity userMsgEntity = userMsgMapper.selectById(userId);
         MsgVo msgVo = get1(userEntity,userMsgEntity);
         return R.success(msgVo);
+    }
+    @Override
+    public R updateUserMsg(UpdateUserDto updateUserDto){
+        UserGmEntity userGmEntity = userGmMapper.selectById(updateUserDto.getUserId());
+        if (ObjectUtils.isNull(userGmEntity)){
+            return R.error("用户不存在！");
+        }
+        UserMsgEntity userMsgEntity = new UserMsgEntity();
+        userMsgEntity.setUserId(updateUserDto.getUserId());
+        if (StringUtils.isNotBlank(updateUserDto.getUserEmail())||ObjectUtils.isNotNull(updateUserDto.getState())){
+            userGmEntity.setEmail(updateUserDto.getUserEmail());
+            userGmEntity.setState(updateUserDto.getState());
+            userMsgEntity.setUserEmail(updateUserDto.getUserEmail());
+            userGmMapper.updateById(userGmEntity);
+            userMsgMapper.updateById(userMsgEntity);
+        }
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserId(updateUserDto.getUserId());
+        if (StringUtils.isNotBlank(updateUserDto.getUserPassword())){
+            userEntity.setUserPassword(SecurityUtils.encryptPassword(updateUserDto.getUserPassword()));
+            userMapper.updateById(userEntity);
+        }else if(StringUtils.isNotBlank(updateUserDto.getUserNickname())||ObjectUtils.isNotNull(updateUserDto.getState())){
+            userEntity.setUserNickname(updateUserDto.getUserNickname());
+            userEntity.setUserState(updateUserDto.getState());
+            userMapper.updateById(userEntity);
+        }
+        if(ObjectUtils.isNotNull(updateUserDto.getAvatarId())||ObjectUtils.isNotNull(updateUserDto.getUserPhone())){
+            userMsgEntity.setUserAvatar(updateUserDto.getAvatarId());
+            userMsgEntity.setUserPhone(updateUserDto.getUserPhone());
+            userMsgMapper.updateById(userMsgEntity);
+        }
+        return R.success("修改成功！");
+    }
+
+    @Override
+    public R updateUserPassword(UserUpdatePasswordDto userUpdatePasswordDto){
+        UserEntity userEntity = userMapper.selectById(userUpdatePasswordDto.getUserId());
+        if (ObjectUtils.isNull(userEntity)){
+            return R.error("用户不存在！");
+        }
+        if(SecurityUtils.matchesPassword(userUpdatePasswordDto.getOldPassword(),userEntity.getUserPassword())){
+            userEntity.setUserPassword(SecurityUtils.encryptPassword(userUpdatePasswordDto.getNewPassword()));
+            userMapper.updateById(userEntity);
+            logoutUser();
+            return R.success("修改成功！");
+        }
+        return R.error("原密码错误！");
+    }
+
+    @Override
+    public R daleteUserById(Integer userId){
+        UserGmEntity userGmEntity = userGmMapper.selectById(userId);
+        if (ObjectUtils.isNull(userGmEntity)){
+            return R.error("管理员不存在！");
+        }
+        userMsgMapper.deleteById(userId);
+        userMapper.deleteById(userId);
+        userGmMapper.deleteById(userId);
+        return R.success("删除成功！");
     }
 }

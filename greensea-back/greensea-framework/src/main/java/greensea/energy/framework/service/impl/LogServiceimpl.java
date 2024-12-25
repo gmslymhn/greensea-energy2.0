@@ -60,6 +60,18 @@ public class LogServiceimpl implements ILogService {
     }
 
     @Override
+    public R getDevUpdateLog(SysLogParam sysLogParam){
+        Page<SysLogEntity> page = new Page<>(sysLogParam.getPageNum(),sysLogParam.getPageSize());
+        QueryWrapper<SysLogEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(sysLogParam.getLoginIp()),"login_ip",sysLogParam.getLoginIp())
+                .eq(StringUtils.isNotBlank(sysLogParam.getUserAccount()),"user_account",sysLogParam.getUserAccount())
+                .eq("type","启停设备")
+                .orderByDesc("log_id");
+        IPage<SysLogEntity> sysLogIPage = sysLogMapper.selectPage(page, queryWrapper);
+        return R.success(sysLogIPage);
+    }
+
+    @Override
     public R getLoginToken(LoginTokenParam loginTokenParam){
         Page<LoginUserToken> page = new Page<>(loginTokenParam.getPageNum(),loginTokenParam.getPageSize());
         Set<String> keys = redisUtils.keys("login_token:");

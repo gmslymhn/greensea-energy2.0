@@ -1,7 +1,9 @@
 package greensea.energy.framework.domain.dto.param;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import greensea.energy.framework.domain.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**

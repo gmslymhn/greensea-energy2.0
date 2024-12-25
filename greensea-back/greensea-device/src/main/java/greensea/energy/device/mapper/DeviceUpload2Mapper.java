@@ -53,6 +53,6 @@ public interface DeviceUpload2Mapper extends BaseMapper<DeviceUpload1Entity> {
                     "  `inv_fault` float NULL DEFAULT NULL COMMENT '逆变器故障信息',\n" +
                     "  `upload_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,\n" +
                     "  PRIMARY KEY (`id`) USING BTREE\n" +
-                    ") ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
+                    ") ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
     int createNewTable2(@Param("tableName") String tableName);
 }

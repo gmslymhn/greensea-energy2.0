@@ -1,6 +1,8 @@
 package greensea.energy.framework.controller.background.gm;
 
 import greensea.energy.common.domain.R;
+import greensea.energy.framework.domain.dto.UpdateGmDto;
+import greensea.energy.framework.domain.dto.UpdateUserDto;
 import greensea.energy.framework.domain.dto.param.GmParam;
 import greensea.energy.framework.domain.dto.param.SysLogParam;
 import greensea.energy.framework.domain.dto.param.UserParam;
@@ -63,5 +65,32 @@ public class GmUserController {
     @Operation(summary = "用户信息",description= "获取用户详细信息")
     public R userMsg(@RequestParam("userId")Integer userId) {
         return iUserService.getUserMsg(userId);
+    }
+
+    @PostMapping("/updateUserMsg")
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @Operation(summary = "修改用户信息",description= "修改用户信息")
+    public R updateUserMsg(@RequestBody @Validated UpdateUserDto updateUserDto) {
+        return iUserService.updateUserMsg(updateUserDto);
+    }
+
+    @PostMapping("/updateGmMsg")
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @Operation(summary = "修改管理员信息",description= "修改管理员信息")
+    public R updateGmMsg(@RequestBody @Validated UpdateGmDto updateGmDto) {
+        return iGmService.updateGmMsg(updateGmDto);
+    }
+
+    @PostMapping("/deleteGm")
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @Operation(summary = "删除管理员",description= "删除管理员")
+    public R deleteGmById(@RequestParam("gmId")Integer gmId) {
+        return iGmService.daleteGmById(gmId);
+    }
+    @PostMapping("/deleteUser")
+    @PreAuthorize("@ss.hasPermission('admin')")
+    @Operation(summary = "删除用户",description= "删除用户")
+    public R deleteUserById(@RequestParam("userId")Integer userId) {
+        return iUserService.daleteUserById(userId);
     }
 }

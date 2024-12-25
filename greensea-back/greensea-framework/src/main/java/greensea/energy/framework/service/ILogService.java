@@ -17,5 +17,7 @@ public interface ILogService {
 
     R getSysLog(SysLogParam sysLogParam);
 
+    R getDevUpdateLog(SysLogParam sysLogParam);
+
     R getLoginToken(LoginTokenParam loginTokenParam);
 }

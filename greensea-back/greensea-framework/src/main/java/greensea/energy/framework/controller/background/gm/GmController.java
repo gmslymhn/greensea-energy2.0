@@ -3,9 +3,7 @@ package greensea.energy.framework.controller.background.gm;
 import greensea.energy.common.annotation.LoginLogAnnotation;
 import greensea.energy.common.annotation.SysLogAnnotation;
 import greensea.energy.common.domain.R;
-import greensea.energy.framework.domain.dto.AddGmDto;
-import greensea.energy.framework.domain.dto.AddUserDto;
-import greensea.energy.framework.domain.dto.GmLoginDto;
+import greensea.energy.framework.domain.dto.*;
 import greensea.energy.framework.domain.dto.param.LoginTokenParam;
 import greensea.energy.framework.service.IDirectoryService;
 import greensea.energy.framework.service.IGmService;
@@ -96,5 +94,23 @@ public class GmController {
     @Operation(summary = "获取自己的登陆信息",description = "登陆成功后第一时间通过token调取,可以获得管理员自己的信息")
     public R getSelfMsg() {
         return iGmService.getGmSelfMsg();
+    }
+
+    @PostMapping("/updateSelfMsg")
+    @PreAuthorize("@ss.hasLoginType('A')")
+    @Operation(summary = "管理员修改自己信息",description= "管理员修改自己信息")
+    public R updateGmMsg(@RequestBody @Validated UpdateGmDto updateGmDto) {
+        updateGmDto.setGmId(SecurityUtils.getUserId());
+        updateGmDto.setGmPassword(null);
+        updateGmDto.setState(null);
+        return iGmService.updateGmMsg(updateGmDto);
+    }
+
+    @PostMapping("/updateSelfPassword")
+    @PreAuthorize("@ss.hasLoginType('A')")
+    @Operation(summary = "管理员修改自己密码",description= "管理员修改自己密码")
+    public R updateGmMsg(@RequestBody @Validated GmUpdatePasswordDto gmUpdatePasswordDto) {
+        gmUpdatePasswordDto.setGmId(SecurityUtils.getUserId());
+        return iGmService.updateGmPassword(gmUpdatePasswordDto);
     }
 }

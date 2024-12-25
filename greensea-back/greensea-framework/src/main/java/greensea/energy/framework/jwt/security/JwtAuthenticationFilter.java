@@ -90,12 +90,12 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
             return;
         }
         LoginUserToken loginUserToken = tokenService.getLoginUserToken(request);
-        if (!loginUser.getToken().equals(loginUserToken.getToken())){
-            String msg = "账号已在别处登录，请重新登陆!";
-            tokenService.delLoginUserToken(loginUserToken.getToken());
-            ServletUtils.renderString(response, JSONUtil.toJsonStr(R.error(ResponseCode.Unauthorized,msg)));
-            return;
-        }
+//        if (!loginUser.getToken().equals(loginUserToken.getToken())){
+//            String msg = "账号已在别处登录，请重新登陆!";
+//            tokenService.delLoginUserToken(loginUserToken.getToken());
+//            ServletUtils.renderString(response, JSONUtil.toJsonStr(R.error(ResponseCode.Unauthorized,msg)));
+//            return;
+//        }
 
         // 构建UsernamePasswordAuthenticationToken，这里密码为null，是因为提供了正确的token，实现自动登录
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser, null, null);

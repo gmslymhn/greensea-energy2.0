@@ -62,6 +62,6 @@ public class AddGmDto {
      * 管理区域
      */
     @Schema(description = "管理区域areacode")
-    @Size(min=2, max=2,message="管理区域areacode")
+    @Size(min=2, max=2,message="管理区域areacode异常")
     private String areacode;
 }

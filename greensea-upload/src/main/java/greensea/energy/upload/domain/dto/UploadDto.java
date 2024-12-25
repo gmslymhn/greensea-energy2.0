@@ -60,5 +60,4 @@ public class UploadDto {
      */
     @Schema(description = "逆变器信息")
     private InvInfo invInfo;
-
 }

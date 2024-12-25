@@ -1,6 +1,7 @@
 package greensea.energy.device.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,10 +21,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName("inv_")
 @Schema(description = "设备图表信息1")
-public class DeviceUpload1Entity {
+public class DeviceUpload1Entity extends DeviceBase1Evtity{
     /**
      * id
      */
     @TableId(value = "id",type = IdType.AUTO)
     Integer id;
+
+    /**
+     * 时间戳
+     */
+    @TableField(exist = false)
+    private Long timestamp;
 }

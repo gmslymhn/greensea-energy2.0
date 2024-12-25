@@ -2,7 +2,6 @@ package greensea.energy.common.utils.http;
 
 import com.alibaba.fastjson2.JSONObject;
 import greensea.energy.common.utils.StringUtils;
-import org.apache.hc.core5.http.HttpResponse;
 
 /**
  * @ClassName: AddressUtil
@@ -34,6 +33,6 @@ public class AddressUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(getAddressByIP("38.207.136.53"));
+        System.out.println(getAddressByIP("140.210.153.99"));
     }
 }

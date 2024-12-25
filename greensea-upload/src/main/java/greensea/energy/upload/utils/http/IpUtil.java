@@ -1,9 +1,13 @@
 package greensea.energy.upload.utils.http;
 
+import greensea.energy.upload.domain.model.Timelnfo;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 /**
  * @ClassName: IpUtil
@@ -58,5 +62,24 @@ public class IpUtil {
             }
         }
         return LOCALHOST_IPV6.equals(ip) ? LOCALHOST_IP : ip;
+    }
+
+    public static void main(String[] args) {
+//        Calendar calendar = Calendar.getInstance();
+//        int year = calendar.get(Calendar.YEAR);
+//        int month = calendar.get(Calendar.MONTH) + 1;  // 月份从0开始，需要加1
+//        int day = calendar.get(Calendar.DAY_OF_MONTH);
+//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//        Timelnfo timelnfo = new Timelnfo(year,month,day,hour);
+//        System.out.println(timelnfo);
+        // 获取当前时间
+        LocalTime now = LocalTime.now();
+
+        // 定义格式化器，注意这里使用了毫秒
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss:SSS");
+
+        // 格式化时间
+        String formattedTime = now.format(formatter);
+        System.out.println(now.format(formatter));
     }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import greensea.energy.common.domain.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -42,6 +43,16 @@ public class DeviceEntity extends BaseEntity {
     /**
      * 设备类型
      */
+    @TableField(exist = false)
+    @Schema(description = "管理员姓名")
+    private String deviceGmName;
+
+    @TableField(exist = false)
+    @Schema(description = "用户姓名")
+    private String deviceUserName;
+    /**
+     * 设备类型
+     */
     @TableField("device_type")
     @Schema(description = "设备类型")
     private String deviceType;
@@ -60,12 +71,14 @@ public class DeviceEntity extends BaseEntity {
     /**
      * 绑定时间
      */
+    @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Schema(description = "绑定时间")
     @TableField("bind_time")
     private LocalDateTime bindTime;
     /**
      * 保修时间
      */
+    @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Schema(description = "保修时间")
     @TableField("warranty_time")
     private LocalDateTime warrantyTime;
@@ -81,4 +94,15 @@ public class DeviceEntity extends BaseEntity {
     @Schema(description = "设备状态")
     @TableField("device_state")
     private Integer deviceState;
+
+    /**
+     * 系统启停信号
+     */
+    @TableField("sys_start_stop")
+    private Integer sysStartStop;
+    /**
+     * 故障复位信号
+     */
+    @TableField("fault_reset")
+    private Integer faultReset;
 }

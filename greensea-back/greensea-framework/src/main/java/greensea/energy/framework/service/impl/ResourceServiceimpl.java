@@ -92,6 +92,57 @@ public class ResourceServiceimpl implements IResourceService {
     }
 
     @Override
+    public R addUpdateResource(MultipartFile file, String fileDescription){
+        String fileName = file.getOriginalFilename();
+        //获取文件后缀名
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        String imagePath = null;
+        if(suffixName.equals(".mot") || suffixName.equals(".hex")||suffixName.equals(".bin")){
+            imagePath ="Update/";
+        } else {
+            return R.error("文件格式错误！");
+        }
+        //重新生成文件名
+        //重新生成文件名
+        Date date = new Date();
+        String fileName1 = DateUtils.format(date) + RandomUtils.createCode(5);
+        String fileName2 = fileName1 + suffixName;
+
+        try {
+            BufferedOutputStream out = new BufferedOutputStream(
+                    new FileOutputStream(new File("greensea-resources/"+imagePath + fileName2)));
+            out.write(file.getBytes());
+            out.flush();
+            out.close();
+            String url = iFileService.upload(file);
+            ResourceEntity resourceEntity = new ResourceEntity();
+            resourceEntity.setResourcePath(imagePath + fileName2);
+            resourceEntity.setResourceName(fileName1);
+            resourceEntity.setResourceType(5);
+            resourceEntity.setCreateUser(SecurityUtils.getUserAccount());
+            resourceEntity.setResourceUrl(url);
+            resourceEntity.setResourceState(true);
+            resourceEntity.setResourceDescription(fileDescription);
+            resourceEntity.setCreateUser(SecurityUtils.getUserAccount());
+            resourceEntity.setDelFlag(0);
+            resourceMapper.insert(resourceEntity);
+            QueryWrapper<ResourceEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("resource_path", resourceEntity.getResourcePath());
+            ResourceEntity resourceEntity1 =resourceMapper.selectOne(queryWrapper);
+            ResourceVo resourceVo = new ResourceVo();
+            resourceVo.setResourceId(resourceEntity1.getResourceId());
+            resourceVo.setResourceName(fileName1);
+            resourceVo.setResourceDescription(resourceEntity1.getResourceDescription());
+            resourceVo.setResourceType(5);
+            resourceVo.setResourceUrl(iFileService.getTemporaryUrl(resourceEntity1.getResourceId()));
+            return R.success(resourceVo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("文件添加失败！");
+        }
+    }
+
+    @Override
     public R getResourceById(int resourceId){
         ResourceEntity resourceEntity = resourceMapper.selectById(resourceId);
         if (ObjectUtils.isNull(resourceEntity)){

@@ -1,6 +1,8 @@
 package greensea.energy.device.service;
 
 import greensea.energy.common.domain.R;
+import greensea.energy.device.domain.dto.ChartDto;
+import greensea.energy.device.domain.dto.UpdateAddressDto;
 
 /**
  * @ClassName: IDeviceService
@@ -10,5 +12,9 @@ import greensea.energy.common.domain.R;
  * @Version: 1.0
  **/
 public interface IDeviceService {
-    R testChart();
+    R getyChart1(ChartDto chartDto);
+
+    R getyChart2(ChartDto chartDto);
+
+    R updateDeviceAddress(UpdateAddressDto updateAddressDto);
 }

@@ -43,6 +43,8 @@ public class LoginUser implements UserDetails {
 
     private String userType;
 
+    private String userEmail;
+
     /**
      * 权限
      */
